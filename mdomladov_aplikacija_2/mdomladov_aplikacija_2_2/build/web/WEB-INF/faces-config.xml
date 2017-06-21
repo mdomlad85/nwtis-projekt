@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    
+    <application>
+        <locale-config>
+            <default-locale>hr</default-locale>
+            <supported-locale>en</supported-locale>
+            <supported-locale>de</supported-locale>
+        </locale-config>
+      
+        <resource-bundle>
+            <base-name>org.foi.nwtis.mdomladov.i18n</base-name>
+            <var>tekst</var>
+        </resource-bundle>
+    </application>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>case1</from-outcome>
+            <to-view-id>/registracija.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>case2</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/privatno/pregledKorisnika.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>case1</from-outcome>
+            <to-view-id>/privatno/azuriraj.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>

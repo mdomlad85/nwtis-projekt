@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>NWTIS konfiguracija</comment>
+<entry key="server.database">jdbc:mysql://localhost:3306/</entry>
+<entry key="admin.username">mdomladov</entry>
+<entry key="admin.password">123456</entry>
+<entry key="admin.database">nwtis_i</entry>
+<entry key="user.username">mdomladov</entry>
+<entry key="user.password">123456</entry>
+<entry key="user.database">nwtis_mdomladov_bp_1</entry>
+<entry key="driver.database.odbc">sun.jdbc.odbc.JdbcOdbcDriver</entry>
+<entry key="driver.database.mysql">com.mysql.jdbc.Driver</entry>
+<entry key="driver.database.derby">org.apache.derby.jdbc.ClientDriver</entry>
+<entry key="driver.database.postgresql">org.postgresql.Driver</entry>
+<entry key="mail.server">localhost</entry>
+<entry key="mail.port">25</entry>
+<entry key="mail.usernameThread">servis@nwtis.nastava.foi.hr</entry>
+<entry key="mail.passwordThread">123456</entry>
+<entry key="mail.timeSecThread">30</entry>
+<entry key="mail.numMessages">7</entry>
+<entry key="mail.subject">NWTiS poruka</entry>
+<entry key="mail.folderNWTiS">NWTiS_Poruke</entry>
+<entry key="mail.folderOther">NWTiS_OstalePoruke</entry>
+<entry key="mail.usernameStatistics">admin@nwtis.nastava.foi.hr</entry>
+<entry key="mail.subjectStatistics">Statistika poruka</entry>
+<entry key="mail.usernameView">admin@nwtis.nastava.foi.hr</entry>
+<entry key="mail.passwordView">654321</entry>
+<entry key="api.key.openweather">ac1d63dad93c53bb6aba2d8a39881e5e</entry>
+<entry key="service.user.name">mdomladov</entry>
+<entry key="service.user.password">123456</entry>
+<entry key="socket.port">35000</entry>
+<entry key="service.pagesize">5</entry>
+</properties>
