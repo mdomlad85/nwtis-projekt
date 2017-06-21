@@ -17,6 +17,8 @@ import javax.ws.rs.core.Response;
 import org.foi.nwtis.mdomladov.dal.UredjajDAL;
 import org.foi.nwtis.mdomladov.helpers.JsonHelper;
 import org.foi.nwtis.mdomladov.konfiguracije.APP_Konfiguracija;
+import org.foi.nwtis.mdomladov.rest.klijenti.GMKlijent;
+import org.foi.nwtis.mdomladov.web.podaci.Lokacija;
 import org.foi.nwtis.mdomladov.web.podaci.Uredjaj;
 import org.foi.nwtis.mdomladov.web.slusaci.SlusacAplikacije;
 
@@ -86,8 +88,13 @@ public class UredjajRESTResourceContainer extends RESTAbstract {
         Uredjaj uredjaj = JsonHelper.parsirajUredjaj(content);
 
         if (uredjaj != null) {
+
+            Lokacija lokacija = getLokacijaZaAdresu(uredjaj.getGeoloc().getAdresa());
+            if (lokacija != null) {
+                uredjaj.setGeoloc(lokacija);
+            }
             responseOk = db.addUredjaj(uredjaj);
-        log();
+            log();
         }
 
         return Response.ok(responseOk ? 1 : 0).build();
@@ -108,8 +115,14 @@ public class UredjajRESTResourceContainer extends RESTAbstract {
         Uredjaj uredjaj = JsonHelper.parsirajUredjaj(content);
 
         if (uredjaj != null) {
+
+            Lokacija lokacija = getLokacijaZaAdresu(uredjaj.getGeoloc().getAdresa());
+            if (lokacija != null) {
+                uredjaj.setGeoloc(lokacija);
+            }
+
             responseOk = db.editUredjaj(uredjaj);
-        log();
+            log();
         }
 
         return responseOk != null
@@ -136,11 +149,20 @@ public class UredjajRESTResourceContainer extends RESTAbstract {
         if (uredjaj != null) {
             uredjaj.setId(id);
             responseOk = db.editUredjaj(uredjaj);
-        log();
+            log();
         }
 
         return responseOk != null
                 ? Response.ok(responseOk ? 1 : 0).build()
                 : Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
+    private Lokacija getLokacijaZaAdresu(String adresa) {
+        if (adresa != null || !adresa.isEmpty()) {
+            GMKlijent klijent = new GMKlijent();
+            Lokacija lokacija = klijent.getGeoLocation(adresa);
+            return lokacija;
+        }
+        return null;
     }
 }

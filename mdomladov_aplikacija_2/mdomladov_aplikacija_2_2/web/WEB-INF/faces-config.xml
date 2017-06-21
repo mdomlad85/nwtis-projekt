@@ -33,5 +33,9 @@
             <from-outcome>case1</from-outcome>
             <to-view-id>/privatno/azuriraj.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>case2</from-outcome>
+            <to-view-id>/privatno/uredjaj.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
 </faces-config>

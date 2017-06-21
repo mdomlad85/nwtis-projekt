@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<endpoints version="2.0" xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
-  <endpoint implementation="org.foi.nwtis.mdomladov.ws.serveri.GeoMeteoWS" name="GeoMeteoWS" url-pattern="/GeoMeteoWS"/>
-  <endpoint implementation="org.foi.nwtis.mdomladov.ws.serveri.NWTiSProjektWS" name="NWTiSProjektWS" url-pattern="/NWTiSProjektWS"/>
-</endpoints>

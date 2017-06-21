@@ -105,11 +105,16 @@ public class JsonHelper {
                 uredjaj.setId(jo.getInt("id"));
             }
             uredjaj.setNaziv(jo.getString("naziv"));
-            String latitude = String.valueOf(jo.getJsonNumber("latitude")
-                    .doubleValue());            
-            String longitude = String.valueOf(jo.getJsonNumber("longitude")
-                    .doubleValue());
-            uredjaj.setGeoloc(new Lokacija(latitude, longitude));
+            
+        JsonObject joGeo = jo.getJsonObject("geoloc");
+        String latitude = joGeo.getString("latitude");
+        String longitude = joGeo.getString("longitude");
+        
+        Lokacija lokacija = new Lokacija(latitude, longitude);
+        if (joGeo.containsKey("adresa")) {
+            lokacija.setAdresa(joGeo.getString("adresa"));
+        }
+        uredjaj.setGeoloc(lokacija);
             uredjaj.setStatus(jo.getJsonNumber("status").intValue());
         } catch (Exception ex) {
             uredjaj = null;

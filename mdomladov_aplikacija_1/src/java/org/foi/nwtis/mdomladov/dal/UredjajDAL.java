@@ -87,7 +87,7 @@ public class UredjajDAL extends DBAbstract {
 
     private List<Uredjaj> fillUredjaji() throws SQLException {
         List<Uredjaj> uredjaji = new ArrayList<>();
-        rs = stmt.executeQuery("SELECT id, naziv, longitude, latitude FROM uredjaji");
+        rs = stmt.executeQuery("SELECT id, naziv, longitude, latitude, status FROM uredjaji");
         while (rs.next()) {
             uredjaji.add(getUredjaj());
         }
@@ -135,6 +135,7 @@ public class UredjajDAL extends DBAbstract {
         Lokacija lokacija = new Lokacija(latitude, longitude);
         uredjaj = new Uredjaj(rs.getInt("id"),
                 rs.getString("naziv"), lokacija);
+        uredjaj.setStatus(rs.getInt("status"));
         return uredjaj;
     }
 

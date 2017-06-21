@@ -20,6 +20,8 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 import org.foi.nwtis.mdomladov.podaci.Korisnik;
+import org.foi.nwtis.mdomladov.podaci.Lokacija;
+import org.foi.nwtis.mdomladov.podaci.Uredjaj;
 
 /**
  *
@@ -76,6 +78,12 @@ public class JsonHelper {
                             } else if (val instanceof Date) {
                                 Date datum = (Date) val;
                                 jsonObj.add(name, ((Date) val).getTime());
+                            } else if (val instanceof Lokacija) {
+                                Lokacija lokacija = (Lokacija) val;
+                                JsonObjectBuilder jsonLokacijaObj = Json.createObjectBuilder();
+                                jsonLokacijaObj.add("latitude", lokacija.getLatitude());
+                                jsonLokacijaObj.add("longitude", lokacija.getLongitude());
+                                jsonObj.add(m.getName().substring(3).toLowerCase(), jsonLokacijaObj);
                             }
                         }
                     } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
@@ -86,25 +94,61 @@ public class JsonHelper {
         }
     }
 
+    public static Uredjaj parsirajUredjaj(String uredjajStr) {
+        Uredjaj uredjaj = null;
+
+        try {
+            JsonReader reader = Json.createReader(new StringReader(uredjajStr));
+            JsonObject jo = reader.readObject();
+            uredjaj = getUredjajFromJobj(jo);
+
+        } catch (Exception ex) {
+            uredjaj = null;
+        }
+
+        return uredjaj;
+    }
+
     public static List<Korisnik> parseKorisnici(String korisniciJsonStr) {
         List<Korisnik> korisnici = new ArrayList<>();
-        
-         try {
+
+        try {
             JsonReader reader = Json.createReader(new StringReader(korisniciJsonStr));
             JsonArray ja = reader.readArray();
-            
-             for (int i = 0; i < ja.size(); i++) {
-                 Korisnik korisnik = getKorisnikFromJobj(ja.getJsonObject(i));
-                 
-                 if(korisnik != null){
-                     korisnici.add(korisnik);
-                 }
-             }
+
+            for (int i = 0; i < ja.size(); i++) {
+                Korisnik korisnik = getKorisnikFromJobj(ja.getJsonObject(i));
+
+                if (korisnik != null) {
+                    korisnici.add(korisnik);
+                }
+            }
         } catch (Exception ex) {
             korisnici = null;
         }
-         
-         return korisnici;
+
+        return korisnici;
+    }
+
+    public static List<Uredjaj> parseUredjaje(String uredjajiJson) {
+        List<Uredjaj> uredjaji = new ArrayList<>();
+
+        try {
+            JsonReader reader = Json.createReader(new StringReader(uredjajiJson));
+            JsonArray ja = reader.readArray();
+
+            for (int i = 0; i < ja.size(); i++) {
+                Uredjaj uredjaj = getUredjajFromJobj(ja.getJsonObject(i));
+
+                if (uredjaj != null) {
+                    uredjaji.add(uredjaj);
+                }
+            }
+        } catch (Exception ex) {
+            uredjaji = null;
+        }
+
+        return uredjaji;
     }
 
     public static Korisnik parseKorisnik(String korisnikJsonStr) {
@@ -134,14 +178,33 @@ public class JsonHelper {
         return korisnik;
     }
 
-    
+    private static Uredjaj getUredjajFromJobj(JsonObject jo) {
+        Uredjaj uredjaj = new Uredjaj();
+        if (jo.containsKey("id")) {
+            uredjaj.setId(jo.getInt("id"));
+        }
+        uredjaj.setNaziv(jo.getString("naziv"));
+        JsonObject joGeo = jo.getJsonObject("geoloc");
+        String latitude = joGeo.getString("latitude");
+        String longitude = joGeo.getString("longitude");
+        
+        Lokacija lokacija = new Lokacija(latitude, longitude);
+        if (joGeo.containsKey("adresa")) {
+            lokacija.setAdresa(joGeo.getString("adresa"));
+        }
+        uredjaj.setGeoloc(lokacija);
+        uredjaj.setStatus(jo.getJsonNumber("status").intValue());
+
+        return uredjaj;
+    }
 
     private static String getAndCheck(JsonObject jo, String key) {
         String val = null;
-        if(jo.containsKey(key)){
-            val =jo.getString(key);
+        if (jo.containsKey(key)) {
+            val = jo.getString(key);
         }
-        
+
         return val;
     }
+
 }

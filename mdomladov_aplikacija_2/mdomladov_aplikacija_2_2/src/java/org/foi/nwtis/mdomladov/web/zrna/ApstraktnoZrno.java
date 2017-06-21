@@ -5,6 +5,7 @@
  */
 package org.foi.nwtis.mdomladov.web.zrna;
 
+import java.io.Serializable;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.faces.context.FacesContext;
@@ -13,7 +14,7 @@ import javax.faces.context.FacesContext;
  *
  * @author Zeus
  */
-public class ApstraktnoZrno {
+public class ApstraktnoZrno implements Serializable {
 
     protected ResourceBundle jeziciBundle;
 
