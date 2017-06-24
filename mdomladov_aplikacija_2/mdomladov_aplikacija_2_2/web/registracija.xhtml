@@ -25,17 +25,17 @@
             <ui:define name="content">
                 <h:form> 
                     <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-                    
+
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputLabel for="username" value="#{tekst['registracija_korisnik']}:" />
                         <p:inputText id="username" value="#{registracijaKorisnika.korisnickoIme}" label="#{tekst['registracija_korisnik']}" />
-                        
+
                         <h:outputLabel for="name" value="#{tekst['registracija_ime']}:" />
                         <p:inputText id="name" value="#{registracijaKorisnika.ime}" label="#{tekst['registracija_ime']}" />
-                        
+
                         <h:outputLabel for="surname" value="#{tekst['registracija_prezime']}:" />
                         <p:inputText id="surname" value="#{registracijaKorisnika.prezime}" label="#{tekst['registracija_prezime']}" />
-                        
+
                         <h:outputLabel for="email" value="#{tekst['registracija_email']}:" />
                         <p:inputText id="email" value="#{registracijaKorisnika.email}" label="#{tekst['registracija_email']}" />
 

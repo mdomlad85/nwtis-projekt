@@ -48,13 +48,49 @@
 }
 
 #top a:link, #top a:visited {
-  color: white;
-  font-weight : bold;
-  text-decoration: none;
+    color: white;
+    font-weight : bold;
+    text-decoration: none;
 }
 
 #top a:link:hover, #top a:visited:hover  {
-  color: black;
-  font-weight : bold;
-  text-decoration : underline;
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+option {
+    background-repeat: no-repeat;
+    background-position: right;
+    width: 100%;
+}
+
+.lang-icon {
+    width: 32px;
+    height: 32px;
+    background-color: inherit;
+    border-color: inherit;
+    float:right;
+}
+
+.clear-both {
+    clear: both;
+}
+
+.en {
+    background-image: url(../images/flags/en.png);
+}
+
+.de {
+    background-image: url(../images/flags/de.png);
+}
+
+.hr {
+    background-image: url(../images/flags/hr.png);
+}
+
+.button-group {
+    border: 2px solid;
+    padding: 10px;
+    margin-bottom: 20px;
 }

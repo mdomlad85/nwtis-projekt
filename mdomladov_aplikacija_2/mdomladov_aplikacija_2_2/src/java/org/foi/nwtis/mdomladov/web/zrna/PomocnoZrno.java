@@ -10,14 +10,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
-import org.foi.nwtis.mdomladov.ejb.sb.UpravljackoZrno;
+import javax.xml.datatype.XMLGregorianCalendar;
 import org.foi.nwtis.mdomladov.konfiguracije.APP_Konfiguracija;
 import org.foi.nwtis.mdomladov.konfiguracije.NeispravnaKonfiguracija;
 import org.foi.nwtis.mdomladov.konfiguracije.NemaKonfiguracije;
@@ -61,11 +59,12 @@ public class PomocnoZrno {
         }
     }
 
-    public String formatDate(Date datum) {
+    public String formatDate(XMLGregorianCalendar datum) {
         if (datum != null) {
+            Date dateObject = datum.toGregorianCalendar().getTime();
             SimpleDateFormat dt1 = new SimpleDateFormat(
                     String.format("%s %s", FORMAT_DATUMA, FORMAT_VREMENA));
-            return dt1.format(datum);
+            return dt1.format(dateObject);
         }
         return null;
     }
@@ -85,6 +84,4 @@ public class PomocnoZrno {
     public int getVelicinaStranica() {
         return velicinaStranica;
     }
-    
-    
 }

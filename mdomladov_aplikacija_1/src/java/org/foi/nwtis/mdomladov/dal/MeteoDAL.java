@@ -86,7 +86,7 @@ public class MeteoDAL extends DBAbstract {
 
     private MeteoPodaci pronadi(int id) throws SQLException {
         MeteoPodaci meteo = null;
-        rs = stmt.executeQuery(getPronadiZadnjiMeteoQuery(id));
+        rs = stmt.executeQuery(getSelectMeteoLastNQuery(id, 1));
 
         if (rs.next()) {
             meteo = fillMeteoObjekt();
@@ -122,14 +122,14 @@ public class MeteoDAL extends DBAbstract {
         meteo.setNaziv(rs.getString("naziv"));
         meteo.setLokacija(rs.getString("latitude"), rs.getString("longitude"));
         meteo.setWeatherIcon(rs.getString("vrijeme"));
-        meteo.setWeatherValue(rs.getString("vrijemeOpis"));
+        meteo.setWeatherValue(rs.getString("vrijeme_opis"));
         meteo.setTemperatureValue(rs.getFloat("temp"));
-        meteo.setTemperatureMin(rs.getFloat("tempMin"));
-        meteo.setTemperatureMax(rs.getFloat("tempMax"));
+        meteo.setTemperatureMin(rs.getFloat("temp_min"));
+        meteo.setTemperatureMax(rs.getFloat("temp_max"));
         meteo.setHumidityValue(rs.getFloat("vlaga"));
         meteo.setPressureValue(rs.getFloat("tlak"));
         meteo.setWindSpeedValue(rs.getFloat("vjetar"));
-        meteo.setWindDirectionValue(rs.getFloat("vjetarSmjer"));
+        meteo.setWindDirectionValue(rs.getFloat("vjetar_smjer"));
         meteo.setLastUpdate(new Date(rs.getTimestamp("preuzeto").getTime()));
         return meteo;
     }
@@ -191,13 +191,13 @@ public class MeteoDAL extends DBAbstract {
 
     private String getPronadiZadnjiMeteoQuery(int id) {
         StringBuilder sb = getPronadiMeteoZaUredjajQuery(id);
-        sb.append(" ORDER BY PREUZETO DESC");
+        sb.append(" ORDER BY PREUZETO DESC ");
 
         return sb.toString();
     }
 
     private StringBuilder getPronadiMeteoZaUredjajQuery(int id) {
-        StringBuilder sb = new StringBuilder("SELECT u.NAZIV, m.* FROM METEO m join UREDJAJI u on m.id=u.id where u.id =");
+        StringBuilder sb = new StringBuilder("SELECT u.NAZIV, m.* FROM METEO m join UREDJAJI u on m.uredjaj_id=u.id where u.id =");
         sb.append(id);
 
         return sb;

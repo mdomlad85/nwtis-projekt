@@ -19,7 +19,9 @@
                 #{tekst['korisnik_pregled_naslov']}
             </ui:define>
 
-            <ui:define name="left">                
+            <ui:define name="left">                              
+                <h:link  value=" #{tekst['kontrolna_ploca_link']}" outcome="kontrolnaPloca"></h:link>
+                <br/>
                 <h:link  value=" #{tekst['korisnik_azuriranje_link']}" outcome="azuriraj"></h:link>
                 <br/>
                 <h:link  value="#{tekst['korisnik_pregled_link']}" outcome="pregledKorisnika"></h:link>
@@ -28,34 +30,54 @@
 
 
             <ui:define name="content">
-                <h:form id="form">
-                    <p:growl id="msgs" showDetail="true"/>
+                <h:form id="uredjajForm">
+                    <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
                     
                     <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="id" value="ID:" />
+                        <p:inputText id="id" value="#{uredjajZrno.uredjaj.id}" />
+                        
                         <h:outputLabel for="naziv" value="#{tekst['uredjaj_naziv']}:" />
                         <p:inputText id="naziv" value="#{uredjajZrno.uredjaj.naziv}"/>
                         
                         
                         <h:outputLabel for="status" value="#{tekst['uredjaj_status']}:" />
                         <p:inputText id="status" value="#{uredjajZrno.uredjaj.status}" />
+                        
+                        <h:outputLabel for="geo_lat" value="#{tekst['uredjaj_latitude']}" />
+                        <p:inputMask id="geo_lat" value="#{uredjajZrno.uredjaj.geoloc.latitude}" mask="99,999999" />
+                        
+                        <h:outputLabel for="geo_lon" value="#{tekst['uredjaj_lngitude']}" />
+                        <p:inputMask id="geo_lon" value="#{uredjajZrno.uredjaj.geoloc.longitude}" mask="99,999999" />
+                        
+                        <h:outputLabel for="geo_add" value="#{tekst['uredjaj_adresa']}" />
+                        <p:inputText id="geo_add" value="#{uredjajZrno.uredjaj.geoloc.adresa}" />
+                        
+                         <p:commandButton value="#{tekst['uredjaj_dodaj_akcija']}" 
+                                          id="dodajUredjaj" 
+                                          update="uredjajForm" 
+                                          actionListener="#{uredjajZrno.spremiUredjaj}" 
+                                          styleClass="ui-priority-primary" />
                     </h:panelGrid>
 
                     <h:panelGrid columns="1">
                         <h:column>
-                            <p:dataTable var="uredjaj" 
+                            <p:dataTable var="uredjaj"
+                                         id='uredjajiList'
                                          value="#{uredjajZrno.uredjaji}" 
                                          paginator="true" rows="#{pomocnoZrno.velicinaStranica}"         
                                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                         editable="true">
+                                         editable="true"
+                                         class="center">
 
                                 <f:facet name="header">
                                     #{tekst['uredjaj_lista_naslov']}
                                 </f:facet>
 
-                                <p:ajax event="rowEdit" listener="#{uredjajZrno.onRowEdit}" update=":form:msgs" />
-                                <p:ajax event="rowEditCancel" listener="#{uredjajZrno.onRowCancel}" update=":form:msgs" />
+                                <p:ajax event="rowEdit" listener="#{uredjajZrno.onRowEdit}" />
+                                <p:ajax event="rowEditCancel" listener="#{uredjajZrno.onRowCancel}" />
 
-                                <p:column headerText="ID">
+                                <p:column style="width:32px" headerText="ID">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{uredjaj.id}" /></f:facet>
                                         <f:facet name="input"><p:inputText id="modelInput" value="#{uredjaj.id}" style="width:100%"/></f:facet>
@@ -67,19 +89,19 @@
                                         <f:facet name="input"><p:inputText value="#{uredjaj.naziv}" style="width:100%"/></f:facet>
                                     </p:cellEditor>
                                 </p:column>
-                                <p:column headerText="#{tekst['uredjaj_status']}">
+                                <p:column style="width:32px" headerText="#{tekst['uredjaj_status']}">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{uredjaj.status}" /></f:facet>
                                         <f:facet name="input"><p:inputText value="#{uredjaj.status}" style="width:100%"/></f:facet>
                                     </p:cellEditor>
                                 </p:column>
-                                <p:column headerText="#{tekst['uredjaj_latitude']}">
+                                <p:column style="width:8n0px" headerText="#{tekst['uredjaj_latitude']}">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{uredjaj.geoloc.latitude}" /></f:facet>
                                         <f:facet name="input"><p:inputText value="#{uredjaj.geoloc.latitude}" style="width:100%"/></f:facet>
                                     </p:cellEditor>
                                 </p:column>
-                                <p:column headerText="#{tekst['uredjaj_lngitude']}">
+                                <p:column style="width:80px" headerText="#{tekst['uredjaj_lngitude']}">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{uredjaj.geoloc.longitude}" /></f:facet>
                                         <f:facet name="input"><p:inputText value="#{uredjaj.geoloc.longitude}" style="width:100%"/></f:facet>
@@ -89,9 +111,70 @@
                                 <p:column style="width:32px">
                                     <p:rowEditor />
                                 </p:column>
+                                
+                                <p:column  headerText="#{tekst['uredjaj_akcije']}">
+                                    <p:commandButton value="#{tekst['uredjaj_adresa']}" id="adresa" actionListener="#{uredjajZrno.dajAdresu(uredjaj.id)}" />
+                                    <p:commandButton value="#{tekst['uredjaj_sve_prognoze']}" update=":uredjajForm:prognoze" id="svePrognoze" actionListener="#{uredjajZrno.dajSvePrognoze(uredjaj.id)}" />
+                                    <p:commandButton value="#{tekst['uredjaj_zadnje_prognoze']}" update=":uredjajForm:prognoze" id="zadnjePrognoze" actionListener="#{uredjajZrno.dajZadnjeMeteoPodatke(uredjaj.id)}" />
+                                </p:column>
                             </p:dataTable>
                         </h:column>
                     </h:panelGrid>
+                    
+                    <h:panelGroup style="display: #{uredjajZrno.displayPrognoze}" id="prognoze">
+                            <h:panelGrid columns="1">
+                                <h3>#{tekst['uredjaj_prognoza_naslov']}</h3>
+                                <h:column>
+                                    <p:dataTable  
+                                        paginator="true" rows="#{pomocnoZrno.velicinaStranica}"         
+                                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                        var="meteo" 
+                                        value="#{uredjajZrno.meteoPodaci}">
+                                        
+                                        <p:column headerText="#{tekst['uredjaj_prognoza_datum']}">
+                                            <h:outputText value="#{pomocnoZrno.formatDate(meteo.lastUpdate)}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['uredjaj_naziv']}">
+                                            <h:outputText value="#{meteo.naziv}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['uredjaj_prognoza_vrijeme']}">
+                                            <h:outputText value="#{meteo.weatherValue}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['uredjaj_prognoza_tlak']}">
+                                            <h:outputText value="#{meteo.pressureValue}" />
+                                            &nbsp;
+                                            <h:outputText value="#{meteo.pressureUnit}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['uredjaj_prognoza_temperature']}">
+                                            <h:outputText value="#{meteo.temperatureValue}" />
+                                            &nbsp;
+                                            <h:outputText value="#{meteo.temperatureUnit}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['uredjaj_prognoza_max_temperatura']}">
+                                            <h:outputText value="#{meteo.temperatureMax}" />
+                                            &nbsp;
+                                            <h:outputText value="#{meteo.temperatureUnit}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['uredjaj_prognoza_min_temperatura']}">
+                                            <h:outputText value="#{meteo.temperatureMin}" />
+                                            &nbsp;
+                                            <h:outputText value="#{meteo.temperatureUnit}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['uredjaj_prognoza_vlaga']}">
+                                            <h:outputText value="#{meteo.humidityValue}" />
+                                            &nbsp;
+                                            <h:outputText value="#{meteo.humidityUnit}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['uredjaj_prognoza_vjetar_smjer']}">
+                                            <h:outputText value="#{meteo.windDirectionValue}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['uredjaj_prognoza_vjetar_brzina']}">
+                                            <h:outputText value="#{meteo.windSpeedValue}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:column>
+                            </h:panelGrid>
+                        </h:panelGroup>
                 </h:form>
             </ui:define>
 

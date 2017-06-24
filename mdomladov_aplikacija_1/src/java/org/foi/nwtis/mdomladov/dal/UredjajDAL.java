@@ -99,7 +99,7 @@ public class UredjajDAL extends DBAbstract {
         Uredjaj uredjaj = null;
         try {
             openConnection();
-            pstmt = conn.prepareStatement(getKorisnikByIdQuery());
+            pstmt = conn.prepareStatement(getUredjajByIdQuery());
             pstmt.setInt(1, Integer.parseInt(uredjajId));
             rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -148,6 +148,10 @@ public class UredjajDAL extends DBAbstract {
 
     private String getKorisnikByIdQuery() {
         return "SELECT id, naziv, longitude, latitude FROM uredjaji where id=?";
+    }
+
+    private String getUredjajByIdQuery() {
+        return "SELECT id, naziv, longitude, latitude, status FROM uredjaji where id=?";
     }
 
     private String getEditUredjajQuery() {

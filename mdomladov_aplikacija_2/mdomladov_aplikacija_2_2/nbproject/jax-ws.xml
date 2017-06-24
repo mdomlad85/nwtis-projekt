@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
-  <services>
-    <service name="GeoMeteoWS">
-      <implementation-class>org.foi.nwtis.mdomladov.ws.serveri.GeoMeteoWS</implementation-class>
-    </service>
-  </services>
+  <services/>
   <clients>
-    <client name="IoT_Master">
-      <wsdl-url>http://nwtis.foi.hr:8080/DZ3_Master/IoT_Master?wsdl</wsdl-url>
-      <local-wsdl-file>nwtis.foi.hr_8080/DZ3_Master/IoT_Master.wsdl</local-wsdl-file>
+    <client name="GeoMeteoWS">
+      <wsdl-url>http://localhost:29000/mdomladov_aplikacija_1/GeoMeteoWS?wsdl</wsdl-url>
+      <local-wsdl-file>localhost_29000/mdomladov_aplikacija_1/GeoMeteoWS.wsdl</local-wsdl-file>
       <package-name forceReplace="true">org.foi.nwtis.mdomladov.ws.klijenti</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
@@ -26,7 +22,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://nwtis.foi.hr:8080/DZ3_Master/IoT_Master?wsdl</wsimport-option-value>
+          <wsimport-option-value>http://localhost:29000/mdomladov_aplikacija_1/GeoMeteoWS?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
@@ -43,5 +39,4 @@
       </wsimport-options>
     </client>
   </clients>
-  <jsr109>false</jsr109>
 </jax-ws>

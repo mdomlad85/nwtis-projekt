@@ -83,6 +83,10 @@ public class JsonHelper {
                                 JsonObjectBuilder jsonLokacijaObj = Json.createObjectBuilder();
                                 jsonLokacijaObj.add("latitude", lokacija.getLatitude());
                                 jsonLokacijaObj.add("longitude", lokacija.getLongitude());
+                                
+                                if(lokacija.getAdresa() != null){
+                                    jsonLokacijaObj.add("adresa", lokacija.getAdresa());
+                                }
                                 jsonObj.add(m.getName().substring(3).toLowerCase(), jsonLokacijaObj);
                             }
                         }

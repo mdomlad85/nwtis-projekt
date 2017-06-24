@@ -2,13 +2,14 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="privatno/uredjaj.xhtml" x="1031" y="431" zoom="true"/>
+        <Node id="privatno/uredjaj.xhtml" x="961" y="439" zoom="true"/>
         <Node id="login.xhtml" x="694" y="128" zoom="true"/>
         <Node id="index.xhtml" x="269" y="208" zoom="true"/>
         <Node id="predlozak.xhtml" x="49" y="51" zoom="true"/>
-        <Node id="privatno/azuriraj.xhtml" x="1232" y="181" zoom="true"/>
+        <Node id="privatno/azuriraj.xhtml" x="964" y="28" zoom="true"/>
         <Node id="registracija.xhtml" x="677" y="349" zoom="true"/>
         <Node id="privatno/pregledKorisnika.xhtml" x="913" y="190" zoom="true"/>
+        <Node id="privatno/kontrolnaPloca.xhtml" x="1213" y="276" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

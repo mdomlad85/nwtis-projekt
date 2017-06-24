@@ -18,7 +18,9 @@
                 #{tekst['korisnik_pregled_naslov']}
             </ui:define>
 
-            <ui:define name="left">                
+            <ui:define name="left">                               
+                <h:link  value=" #{tekst['kontrolna_ploca_link']}" outcome="kontrolnaPloca"></h:link>
+                <br/>
                 <h:link  value=" #{tekst['korisnik_azuriranje_link']}" outcome="azuriraj"></h:link>
                 <br/>
                 <h:link  value="#{tekst['uredjaj_link']}" outcome="uredjaj"></h:link>

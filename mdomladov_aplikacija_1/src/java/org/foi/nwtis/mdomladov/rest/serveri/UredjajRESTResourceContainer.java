@@ -158,7 +158,7 @@ public class UredjajRESTResourceContainer extends RESTAbstract {
     }
 
     private Lokacija getLokacijaZaAdresu(String adresa) {
-        if (adresa != null || !adresa.isEmpty()) {
+        if (adresa != null) {
             GMKlijent klijent = new GMKlijent();
             Lokacija lokacija = klijent.getGeoLocation(adresa);
             return lokacija;

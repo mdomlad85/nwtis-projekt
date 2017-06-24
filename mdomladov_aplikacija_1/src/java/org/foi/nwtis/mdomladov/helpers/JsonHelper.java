@@ -6,15 +6,15 @@
 package org.foi.nwtis.mdomladov.helpers;
 
 import java.io.StringReader;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -82,7 +82,10 @@ public class JsonHelper {
                                 Lokacija lokacija = (Lokacija) val;
                                 JsonObjectBuilder jsonLokacijaObj = Json.createObjectBuilder();
                                 jsonLokacijaObj.add("latitude", lokacija.getLatitude());
-                                jsonLokacijaObj.add("longitude", lokacija.getLongitude());
+                                jsonLokacijaObj.add("longitude", lokacija.getLongitude()); 
+                                if(lokacija.getAdresa() != null){
+                                    jsonLokacijaObj.add("adresa", lokacija.getAdresa());
+                                }
                                 jsonObj.add(m.getName().substring(3).toLowerCase(), jsonLokacijaObj);
                             }
                         }
@@ -100,12 +103,90 @@ public class JsonHelper {
         try {
             JsonReader reader = Json.createReader(new StringReader(uredjajStr));
             JsonObject jo = reader.readObject();
-            uredjaj = new Uredjaj();
-             if (jo.containsKey("id")) {
-                uredjaj.setId(jo.getInt("id"));
+            uredjaj = getUredjajFromJobj(jo);
+
+        } catch (Exception ex) {
+            uredjaj = null;
+        }
+
+        return uredjaj;
+    }
+
+    public static List<Korisnik> parseKorisnici(String korisniciJsonStr) {
+        List<Korisnik> korisnici = new ArrayList<>();
+
+        try {
+            JsonReader reader = Json.createReader(new StringReader(korisniciJsonStr));
+            JsonArray ja = reader.readArray();
+
+            for (int i = 0; i < ja.size(); i++) {
+                Korisnik korisnik = getKorisnikFromJobj(ja.getJsonObject(i));
+
+                if (korisnik != null) {
+                    korisnici.add(korisnik);
+                }
             }
-            uredjaj.setNaziv(jo.getString("naziv"));
-            
+        } catch (Exception ex) {
+            korisnici = null;
+        }
+
+        return korisnici;
+    }
+
+    public static List<Uredjaj> parseUredjaje(String uredjajiJson) {
+        List<Uredjaj> uredjaji = new ArrayList<>();
+
+        try {
+            JsonReader reader = Json.createReader(new StringReader(uredjajiJson));
+            JsonArray ja = reader.readArray();
+
+            for (int i = 0; i < ja.size(); i++) {
+                Uredjaj uredjaj = getUredjajFromJobj(ja.getJsonObject(i));
+
+                if (uredjaj != null) {
+                    uredjaji.add(uredjaj);
+                }
+            }
+        } catch (Exception ex) {
+            uredjaji = null;
+        }
+
+        return uredjaji;
+    }
+
+    public static Korisnik parsirajKorisnika(String korisnikJsonStr) {
+        Korisnik korisnik = null;
+
+        try {
+            JsonReader reader = Json.createReader(new StringReader(korisnikJsonStr));
+            JsonObject jo = reader.readObject();
+            korisnik = getKorisnikFromJobj(jo);
+        } catch (Exception ex) {
+            korisnik = null;
+        }
+
+        return korisnik;
+    }
+
+    private static Korisnik getKorisnikFromJobj(JsonObject jo) {
+        Korisnik korisnik = new Korisnik();
+        if (jo.containsKey("id")) {
+            korisnik.setId(jo.getInt("id"));
+        }
+        korisnik.setIme(getAndCheck(jo, "ime"));
+        korisnik.setPrezime(getAndCheck(jo, "prezime"));
+        korisnik.setKorisnickoIme(getAndCheck(jo, "korisnickoIme"));
+        korisnik.setKorisnickaLozinka(getAndCheck(jo, "korisnickaLozinka"));
+        korisnik.setEmail(getAndCheck(jo, "email"));
+        return korisnik;
+    }
+
+    private static Uredjaj getUredjajFromJobj(JsonObject jo) {
+        Uredjaj uredjaj = new Uredjaj();
+        if (jo.containsKey("id")) {
+            uredjaj.setId(jo.getInt("id"));
+        }
+        uredjaj.setNaziv(jo.getString("naziv"));
         JsonObject joGeo = jo.getJsonObject("geoloc");
         String latitude = joGeo.getString("latitude");
         String longitude = joGeo.getString("longitude");
@@ -115,42 +196,17 @@ public class JsonHelper {
             lokacija.setAdresa(joGeo.getString("adresa"));
         }
         uredjaj.setGeoloc(lokacija);
-            uredjaj.setStatus(jo.getJsonNumber("status").intValue());
-        } catch (Exception ex) {
-            uredjaj = null;
-        }
+        uredjaj.setStatus(jo.getJsonNumber("status").intValue());
 
         return uredjaj;
     }
 
-    public static Korisnik parsirajKorisnika(String korisnikJsonStr) {
-        Korisnik korisnik = null;
-
-        try {
-            JsonReader reader = Json.createReader(new StringReader(korisnikJsonStr));
-            JsonObject jo = reader.readObject();
-            korisnik = new Korisnik();
-            if (jo.containsKey("id")) {
-                korisnik.setId(jo.getInt("id"));
-            }
-            korisnik.setIme(getAndCheck(jo, "ime"));
-            korisnik.setPrezime(getAndCheck(jo, "prezime"));
-            korisnik.setKorisnickoIme(getAndCheck(jo, "korisnickoIme"));
-            korisnik.setKorisnickaLozinka(getAndCheck(jo, "korisnickaLozinka"));
-            korisnik.setEmail(getAndCheck(jo, "email"));
-        } catch (Exception ex) {
-            korisnik = null;
-        }
-
-        return korisnik;
-    }
-
     private static String getAndCheck(JsonObject jo, String key) {
         String val = null;
-        if(jo.containsKey(key)){
-            val =jo.getString(key);
+        if (jo.containsKey(key)) {
+            val = jo.getString(key);
         }
-        
+
         return val;
     }
 
