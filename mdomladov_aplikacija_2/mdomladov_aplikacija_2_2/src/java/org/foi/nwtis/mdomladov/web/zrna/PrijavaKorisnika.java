@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.foi.nwtis.mdomladov.helpers.JsonHelper;
 import org.foi.nwtis.mdomladov.podaci.Korisnik;
 import org.foi.nwtis.mdomladov.rest.klijenti.KorisnikRESTKlijent;
-import org.primefaces.context.RequestContext;
+import org.foi.nwtis.mdomladov.web.filteri.KontrolaPristupa;
 
 /**
  *
@@ -53,7 +53,7 @@ public class PrijavaKorisnika extends ApstraktnoZrno implements Serializable {
                 ExternalContext exContext = FacesContext.getCurrentInstance().getExternalContext();
                 HttpSession session = (HttpSession) exContext.getSession(false);
                 exContext.redirect("privatno/pregledKorisnika.xhtml");
-                session.setAttribute("korisnik", korisnik);
+                session.setAttribute(KontrolaPristupa.KORISNIK_ATTRIBUTE, korisnik);
             }
         } else {
             msgText = jeziciBundle.getString("login_nepotpuna_forma");

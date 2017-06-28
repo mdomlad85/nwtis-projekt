@@ -19,11 +19,17 @@
             </ui:define>
 
             <ui:define name="left">                               
-                <h:link  value=" #{tekst['kontrolna_ploca_link']}" outcome="kontrolnaPloca"></h:link>
+                <h:link  value=" #{tekst['kontrolna_ploca_link']}" outcome="kontrolnaPlocaServer"></h:link>
+                <br/>                  
+                <h:link  value=" #{tekst['kontrolna_ploca_uredjaji_link']}" outcome="kontrolnaPlocaUredjaji"></h:link>
                 <br/>
                 <h:link  value=" #{tekst['korisnik_azuriranje_link']}" outcome="azuriraj"></h:link>
                 <br/>
                 <h:link  value="#{tekst['uredjaj_link']}" outcome="uredjaj"></h:link>
+                <br/>
+                <h:link  value="#{tekst['dnevnik_pregled_link']}" outcome="pregledDnevnika"></h:link>
+                <br/>
+                <h:link  value="#{tekst['pregledPoruka_poruka_link']}" outcome="pregledPoruka"></h:link>
             </ui:define>
 
 
@@ -35,7 +41,8 @@
                             <h:panelGrid columns="1">
                                 <h3>#{tekst['korisnik_lista_naslov']}</h3>
                                 <h:column>
-                                    <p:dataTable var="korisnik" 
+                                    <p:dataTable var="korisnik"
+                                                 tableStyle="table-layout: auto;"
                                                  value="#{pregledKorisnika.korisnici}" 
                                                  paginator="true" rows="#{pomocnoZrno.velicinaStranica}"         
                                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">

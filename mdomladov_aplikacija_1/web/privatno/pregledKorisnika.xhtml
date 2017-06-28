@@ -36,6 +36,7 @@
                                 <h3>Pregled korisnika</h3>
                                 <h:column>
                                     <p:dataTable var="korisnik" 
+                                                 tableStyle="table-layout: auto;"
                                                  value="#{pregledKorisnika.korisnici}" 
                                                  paginator="true" rows="#{pomocnoZrno.velicinaStranica}"         
                                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">

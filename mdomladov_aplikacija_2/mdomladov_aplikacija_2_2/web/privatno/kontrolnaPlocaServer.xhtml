@@ -17,17 +17,23 @@
                 #{tekst['kontrolna_ploca_naslov']}
             </ui:define>
 
-            <ui:define name="left">
+            <ui:define name="left"> 
+                <h:link  value=" #{tekst['kontrolna_ploca_uredjaji_link']}" outcome="kontrolnaPlocaUredjaji"></h:link>
+                <br/>
                 <h:link  value=" #{tekst['korisnik_azuriranje_link']}" outcome="azuriraj"></h:link>
                 <br/>
                 <h:link  value="#{tekst['korisnik_pregled_link']}" outcome="pregledKorisnika"></h:link>
+                <br/>
+                <h:link  value="#{tekst['dnevnik_pregled_link']}" outcome="pregledDnevnika"></h:link>
+                <br/>
+                <h:link  value="#{tekst['pregledPoruka_poruka_link']}" outcome="pregledPoruka"></h:link>
                 <br/>
                 <h:link  value="#{tekst['uredjaj_link']}" outcome="uredjaj"></h:link>
             </ui:define>
 
             <ui:define name="content">
                 <h:form id="dashboardForm"> 
-                    <p:growl id="msgs" sticky="true" autoUpdate="true" showDetail="true" life="3000" />
+                    <p:growl id="msgs" autoUpdate="true" showDetail="true" life="5000" />
 
                     <h:panelGrid columns="4" cellpadding="5" id="serverManager" class="button-group">
                         <f:facet name="header">
@@ -70,7 +76,7 @@
                                          actionListener="#{kontrolnaPlocaZrno.masterAction('stop')}" 
                                          icon="ui-icon-stop" />
 
-                        <p:commandButton value="#{tekst['kontrolna_ploca_iot_work']}" 
+                        <p:commandButton value="#{tekst['kontrolna_ploca_iot_work']}"
                                          class="dasboard-button"
                                          actionListener="#{kontrolnaPlocaZrno.masterAction('work')}" 
                                          icon="ui-icon-clipboard" />
@@ -80,16 +86,16 @@
                                          actionListener="#{kontrolnaPlocaZrno.masterAction('wait')}" 
                                          icon="ui-icon-script" />
 
-                        <p:commandButton value="#{tekst['kontrolna_ploca_iot_status']}" 
+                        <p:commandButton value="#{tekst['kontrolna_ploca_iot_status']}"
                                          class="dasboard-button"
                                          actionListener="#{kontrolnaPlocaZrno.masterAction('status')}" 
                                          icon="ui-icon-help" />
                     </h:panelGrid>
                 </h:form>
 
-                    <p:blockUI block="dashboardForm" widgetVar="bui">
-                        <p:graphicImage name="images/loader.gif"/>
-                    </p:blockUI>
+                <p:blockUI block="dashboardForm" trigger="@(.dasboard-button)">
+                    <p:graphicImage name="images/loader.gif"/>
+                </p:blockUI>
             </ui:define>
 
         </ui:composition> 

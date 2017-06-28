@@ -16,6 +16,7 @@ import javax.ejb.LocalBean;
 @LocalBean
 public class ZrnoAutorizacije {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    public boolean autenticirajKorisnika(final String korisnickoIme, final String lozinka) {
+        return false;
+    }
 }

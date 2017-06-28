@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -31,6 +32,8 @@ public class QueueHelper {
     public static final String QUEUE_NWTIS_1 = "jms/NWTiS_mdomladov_1";
 
     public static final String QUEUE_NWTIS_2 = "jms/NWTiS_mdomladov_2";
+    
+    private static Queue queue;
 
     protected Connection conn;
 
@@ -39,8 +42,6 @@ public class QueueHelper {
     protected String queueName;
 
     protected int brojac;
-
-    private Queue queue;
 
     public void send(Serializable message) {
         try {

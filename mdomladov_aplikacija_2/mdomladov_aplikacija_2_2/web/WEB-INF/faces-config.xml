@@ -38,8 +38,20 @@
             <to-view-id>/privatno/uredjaj.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
+            <from-outcome>case4</from-outcome>
+            <to-view-id>/privatno/kontrolnaPlocaUredjaji.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>case3</from-outcome>
-            <to-view-id>/privatno/kontrolnaPloca.xhtml</to-view-id>
+            <to-view-id>/privatno/kontrolnaPlocaServer.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>case5</from-outcome>
+            <to-view-id>/privatno/pregledDnevnika.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>case6</from-outcome>
+            <to-view-id>/privatno/pregledPoruka.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

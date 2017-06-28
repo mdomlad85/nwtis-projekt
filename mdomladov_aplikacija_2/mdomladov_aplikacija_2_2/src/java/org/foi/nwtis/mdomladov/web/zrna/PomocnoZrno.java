@@ -62,9 +62,16 @@ public class PomocnoZrno {
     public String formatDate(XMLGregorianCalendar datum) {
         if (datum != null) {
             Date dateObject = datum.toGregorianCalendar().getTime();
+            return formatDate(dateObject);
+        }
+        return null;
+    }
+
+    public String formatDate(Date date) {
+        if (date != null) {
             SimpleDateFormat dt1 = new SimpleDateFormat(
                     String.format("%s %s", FORMAT_DATUMA, FORMAT_VREMENA));
-            return dt1.format(dateObject);
+            return dt1.format(date);
         }
         return null;
     }

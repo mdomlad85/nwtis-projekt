@@ -5,12 +5,10 @@
  */
 package org.foi.nwtis.mdomladov.helpers;
 
-import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
+import org.foi.nwtis.mdomladov.ejb.sb.UpravljackoZrno;
 import org.foi.nwtis.mdomladov.konfiguracije.APP_Konfiguracija;
 import org.foi.nwtis.mdomladov.konfiguracije.NeispravnaKonfiguracija;
 import org.foi.nwtis.mdomladov.konfiguracije.NemaKonfiguracije;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Osnovne stvari koje koriste svi helperi idu
@@ -48,6 +46,6 @@ public class CoreHelper extends Thread {
     }
 
     private void napuniKonfiguraciju() {
-        throw new NotImplementedException();
+        konfiguracija = UpravljackoZrno.getKonfiguracija();
     }
 }

@@ -29,7 +29,7 @@ import org.foi.nwtis.mdomladov.web.slusaci.SlusacAplikacije;
  * 
  * @author Marko Domladovac
  */
-public abstract class EmailHelper {
+public abstract class EmailHelper extends Thread {
 
     /**
      *
@@ -48,7 +48,7 @@ public abstract class EmailHelper {
      */
     protected String password;
     
-    private final APP_Konfiguracija konfiguracija;
+    protected final APP_Konfiguracija konfiguracija;
 
     public EmailHelper() {
         konfiguracija = (APP_Konfiguracija) SlusacAplikacije.context

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import okhttp3.Response;
 import org.foi.nwtis.mdomladov.helpers.JsonHelper;
 import org.foi.nwtis.mdomladov.podaci.Korisnik;
+import org.foi.nwtis.mdomladov.web.filteri.KontrolaPristupa;
 
 /**
  *
@@ -34,7 +35,7 @@ public class UredivanjeKorisnika extends KorisnikZrno {
     private void init() {
         ExternalContext exContext = FacesContext.getCurrentInstance().getExternalContext();
         HttpSession session = (HttpSession) exContext.getSession(false);
-        korisnik = (Korisnik) session.getAttribute("korisnik");
+        korisnik = (Korisnik) session.getAttribute(KontrolaPristupa.KORISNIK_ATTRIBUTE);
         korisnickoIme = korisnik.getKorisnickoIme();
         prezime = korisnik.getPrezime();
         email = korisnik.getEmail();
@@ -78,7 +79,7 @@ public class UredivanjeKorisnika extends KorisnikZrno {
                     ExternalContext exContext = FacesContext.getCurrentInstance().getExternalContext();
                     HttpSession session = (HttpSession) exContext.getSession(false);
                     exContext.redirect("pregledKorisnika.xhtml");
-                    session.setAttribute("korisnik", editUser);
+                    session.setAttribute(KontrolaPristupa.KORISNIK_ATTRIBUTE, editUser);
                 } else {
                     msgText = jeziciBundle.getString("registracija_pogreska_admin");
                 }

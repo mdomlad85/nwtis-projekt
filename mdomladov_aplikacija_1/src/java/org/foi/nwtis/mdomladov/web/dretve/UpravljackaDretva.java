@@ -22,6 +22,8 @@ public class UpravljackaDretva extends Thread {
 
     private APP_Konfiguracija konfiguracija;
 
+    private ServerSocket ss;
+
     public UpravljackaDretva(APP_Konfiguracija konfiguracija) {
         this.konfiguracija = konfiguracija;
     }
@@ -39,19 +41,35 @@ public class UpravljackaDretva extends Thread {
         //kreiranja socketa a drugi pojedinog zahtjeva
         //Ne želimo da nam krivi zahtjev ub ije server
         try {
-            ServerSocket ss = new ServerSocket(konfiguracija.getSocketPort());
+            ss = new ServerSocket(konfiguracija.getSocketPort());
             while (stanjeServera != StanjeServera.STOPPED) {
+                Socket socket = ss.accept();
+                RadnaDretva radnaDretva = new RadnaDretva(socket, konfiguracija);
+                radnaDretva.start();
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(UpravljackaDretva.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ss != null) {
                 try {
-                    Socket socket = ss.accept();
-                    RadnaDretva radnaDretva = new RadnaDretva(socket, konfiguracija);
-                    radnaDretva.start();
+                    ss.close();
                 } catch (IOException ex) {
                     Logger.getLogger(UpravljackaDretva.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        } catch (IOException ex) {
-            Logger.getLogger(UpravljackaDretva.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public void interrupt() {
+        if (ss != null) {
+            try {
+                ss.close();
+            } catch (IOException ex) {
+                Logger.getLogger(UpravljackaDretva.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        super.interrupt();
     }
 
     @Override
@@ -69,7 +87,7 @@ public class UpravljackaDretva extends Thread {
 
     public void setKonfiguracija(APP_Konfiguracija konfiguracija) {
         this.konfiguracija = konfiguracija;
-    }    
+    }
 
     /**
      * Stanja servera

@@ -17,6 +17,7 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 import okhttp3.Response;
 import org.foi.nwtis.mdomladov.podaci.Korisnik;
+import org.foi.nwtis.mdomladov.web.filteri.KontrolaPristupa;
 
 /**
  *
@@ -50,7 +51,7 @@ public class RegistracijaKorisnika extends KorisnikZrno {
                     ExternalContext exContext = FacesContext.getCurrentInstance().getExternalContext();
                     HttpSession session = (HttpSession) exContext.getSession(false);
                     exContext.redirect("privatno/pregledKorisnika.xhtml");
-                    session.setAttribute("korisnik", korisnik);
+                    session.setAttribute(KontrolaPristupa.KORISNIK_ATTRIBUTE, korisnik);
                 } else {
                     msgText = jeziciBundle.getString("registracija_pogreska_admin");
                 }

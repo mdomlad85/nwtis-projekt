@@ -5,6 +5,7 @@
  */
 package org.foi.nwtis.mdomladov.web.zrna;
 
+import org.foi.nwtis.mdomladov.podaci.Izbornik;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;

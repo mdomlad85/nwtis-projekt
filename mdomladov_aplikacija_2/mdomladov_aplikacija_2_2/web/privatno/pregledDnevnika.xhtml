@@ -8,33 +8,40 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        
         <ui:composition template="../predlozak.xhtml">
 
             <ui:define name="naslov">
-                NWTiS - Pregled dnevnika
+                #{tekst['dnevnik_pregled_naslov']}
             </ui:define>
 
             <ui:define name="top">
-                NWTiS - Pregled dnevnika
+                #{tekst['dnevnik_pregled_naslov']}
             </ui:define>
 
-            <ui:define name="left">                
-                <h:link  value="Početna" outcome="/index"></h:link>
+            <ui:define name="left">                               
+                <h:link  value=" #{tekst['kontrolna_ploca_link']}" outcome="kontrolnaPlocaServer"></h:link>
+                <br/>                  
+                <h:link  value=" #{tekst['kontrolna_ploca_uredjaji_link']}" outcome="kontrolnaPlocaUredjaji"></h:link>
                 <br/>
-                <h:link  value="Pregled korisnika" outcome="pregledKorisnika"></h:link>
+                <h:link  value=" #{tekst['korisnik_azuriranje_link']}" outcome="azuriraj"></h:link>
                 <br/>
-                <h:link  value="Pregled zahtjeva" outcome="pregledZahtjeva"></h:link>
+                <h:link  value="#{tekst['uredjaj_link']}" outcome="uredjaj"></h:link>
+                <br/>
+                <h:link  value="#{tekst['korisnik_pregled_link']}" outcome="pregledKorisnika"></h:link>
+                <br/>
+                <h:link  value="#{tekst['pregledPoruka_poruka_link']}" outcome="pregledPoruka"></h:link>
             </ui:define>
+
+
 
             <ui:define name="content">
                 <h:panelGroup class="center">
                     <h:form>
                         <h:panelGroup id="dnevnik">
                             <h:panelGrid columns="1">
-                                <h3>Pregled dnevnika</h3>
+                                <h3>#{tekst['dnevnik_lista_naslov']}</h3>
                                 <h:column>
-                                    <p:dataTable var="dnevnik" 
+                                    <p:dataTable var="dnevnik"
                                                  tableStyle="table-layout: auto;"
                                                  value="#{pregledDnevnika.dnevnici}" 
                                                  paginator="true" rows="#{pomocnoZrno.velicinaStranica}"         
@@ -42,23 +49,23 @@
                                         <p:column headerText="ID">
                                             <h:outputText value="#{dnevnik.id}" />
                                         </p:column>
-                                        <p:column headerText="Korisnik">
+                                        <p:column headerText="#{tekst['dnevnik_korisnik']}">
                                             <h:outputText value="#{dnevnik.korisnik}" />
                                         </p:column>
-                                        <p:column headerText="Status">
-                                            <h:outputText value="#{dnevnik.status}" />
-                                        </p:column>
-                                        <p:column headerText="Trajanje">
-                                            <h:outputText value="#{dnevnik.trajanje}" />
-                                        </p:column>
-                                        <p:column headerText="IP adresa">
+                                        <p:column headerText="#{tekst['dnevnik_ip']}">
                                             <h:outputText value="#{dnevnik.ipadresa}" />
                                         </p:column>
-                                        <p:column headerText="Url">
-                                            <h:outputText value="#{dnevnik.url}" />
+                                        <p:column headerText="#{tekst['dnevnik_trajanje']}">
+                                            <h:outputText value="#{dnevnik.trajanje}" />
                                         </p:column>
-                                        <p:column headerText="Vrijeme">
+                                        <p:column headerText="#{tekst['dnevnik_vrijeme']}">
                                             <h:outputText value="#{pomocnoZrno.formatDate(dnevnik.vrijeme)}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['dnevnik_status']}">
+                                            <h:outputText value="#{dnevnik.status}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['dnevnik_url']}">
+                                            <h:outputText value="#{dnevnik.url}" />
                                         </p:column>
                                     </p:dataTable>
                                 </h:column>
@@ -73,4 +80,6 @@
     </h:body>
 
 </html>
+
+
 

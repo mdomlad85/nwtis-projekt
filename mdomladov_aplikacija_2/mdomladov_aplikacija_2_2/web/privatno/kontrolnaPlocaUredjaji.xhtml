@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+
+        <ui:composition template="../predlozak.xhtml">
+
+            <ui:define name="naslov">
+                #{tekst['kontrolna_ploca_naslov']}
+            </ui:define>
+
+            <ui:define name="top">
+                #{tekst['kontrolna_ploca_naslov']}
+            </ui:define>
+
+            <ui:define name="left">                            
+                <h:link  value=" #{tekst['kontrolna_ploca_link']}" outcome="kontrolnaPlocaServer"></h:link>
+                <br/>                 
+                <h:link  value=" #{tekst['korisnik_azuriranje_link']}" outcome="azuriraj"></h:link>
+                <br/>
+                <h:link  value="#{tekst['korisnik_pregled_link']}" outcome="pregledKorisnika"></h:link>
+                <br/>
+                <h:link  value="#{tekst['dnevnik_pregled_link']}" outcome="pregledDnevnika"></h:link>
+                <br/>
+                <h:link  value="#{tekst['pregledPoruka_poruka_link']}" outcome="pregledPoruka"></h:link>
+                <br/>
+                <h:link  value="#{tekst['uredjaj_link']}" outcome="uredjaj"></h:link>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form id="dashboardForm"> 
+                    <p:growl id="msgs" autoUpdate="true" showDetail="true" life="5000" />
+
+
+                    <h:panelGrid columns="3" cellpadding="5" id="iotMaster" class="button-group">
+                        <f:facet name="header">
+                            <p:outputLabel value="#{tekst['kontrolna_ploca_master_naslov']}" />
+                        </f:facet>
+
+                        <p:commandButton value="#{tekst['kontrolna_ploca_uredjaji_pregled_load']}"
+                                         class="dasboard-button"
+                                         actionListener="#{kontrolnaPlocaZrno.masterAction('load')}"
+                                         update="ddlUredjaji iotInfo"
+                                         icon="ui-icon-refresh" />
+
+                        <p:commandButton value="#{tekst['kontrolna_ploca_uredjaji_pregled_clear']}"
+                                         class="dasboard-button"
+                                         actionListener="#{kontrolnaPlocaZrno.masterAction('clear')}"
+                                         update="ddlUredjaji iotInfo"
+                                         icon="ui-icon-close" />
+
+                        <p:commandButton value="#{tekst['kontrolna_ploca_uredjaji_pregled_list']}"
+                                         class="dasboard-button"
+                                         actionListener="#{kontrolnaPlocaZrno.masterAction('list')}"
+                                         icon="ui-icon-clipboard"
+                                         update="ddlUredjaji iotInfo" />
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="2" cellpadding="5" id="ddlUredjaji" style="#{kontrolnaPlocaZrno.displayUredjaje}">
+                        <p:outputLabel for="odabraniUredjajId" value="#{tekst['kontrolna_ploca_uredjaji_pregled_lista']}: " />
+                        <p:selectOneMenu
+                            id="odabraniUredjajId" 
+                            value="#{kontrolnaPlocaZrno.odabraniUredjajId}" 
+                            effect="fade"  
+                            filter="true" 
+                            filterMatchMode="startsWith"
+                            style="width:245px">
+                            <f:selectItem itemLabel="#{tekst['dropdown_odabir_default']}" itemValue="" />
+                            <f:selectItems itemLabel="#{u.labela}" itemValue="#{u.vrijednost}" value="#{kontrolnaPlocaZrno.uredjajiSelectList}" var="u" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="4" cellpadding="5" id="iotInfo" class="button-group" style="#{kontrolnaPlocaZrno.displayUredjaje}">
+                        <f:facet name="header">
+                            <p:outputLabel value="#{tekst['kontrolna_ploca_iot_naslov']}" />
+                        </f:facet>
+
+                        <p:commandButton value="#{tekst['kontrolna_ploca_uredjaji_pregled_work']}"
+                                         class="dasboard-button"
+                                         actionListener="#{kontrolnaPlocaZrno.uredjajAction('work')}"
+                                         icon="ui-icon-play" />
+
+                        <p:commandButton value="#{tekst['kontrolna_ploca_uredjaji_pregled_wait']}"
+                                         class="dasboard-button"
+                                         actionListener="#{kontrolnaPlocaZrno.uredjajAction('wait')}"
+                                         icon="ui-icon-stop" />
+
+                        <p:commandButton value="#{tekst['kontrolna_ploca_uredjaji_pregled_remove']}"
+                                         class="dasboard-button"
+                                         update="ddlUredjaji"
+                                         actionListener="#{kontrolnaPlocaZrno.uredjajAction('remove')}"
+                                         icon="ui-icon-close" />
+
+                        <p:commandButton value="#{tekst['kontrolna_ploca_uredjaji_pregled_status']}"
+                                         class="dasboard-button"
+                                         actionListener="#{kontrolnaPlocaZrno.uredjajAction('status')}"
+                                         icon="ui-icon-info" />
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="2" cellpadding="5" id="dodajUredjaj" >
+                        <f:facet name="header">
+                            <p:outputLabel value="#{tekst['kontrolna_ploca_dodaj_iot_naslov']}" />
+                        </f:facet>
+                        
+                        <p:outputLabel value="ID" />                        
+                        <p:inputText value="#{kontrolnaPlocaZrno.id}" />
+                        
+                        <p:outputLabel value="#{tekst['kontrolna_ploca_uredjaji_pregled_naziv']}" />                        
+                        <p:inputText value="#{kontrolnaPlocaZrno.naziv}" />
+                        
+                        <p:outputLabel value="#{tekst['kontrolna_ploca_uredjaji_pregled_adresa']}" />                        
+                        <p:inputText value="#{kontrolnaPlocaZrno.adresa}" />
+
+                        <p:commandButton value="#{tekst['kontrolna_ploca_uredjaji_pregled_add_action']}"
+                                         class="dasboard-button"
+                                         update="ddlUredjaji"
+                                         actionListener="#{kontrolnaPlocaZrno.dodajUredjaj}"
+                                         icon="ui-icon-check" />
+                    </h:panelGrid>
+
+                </h:form>
+
+                <p:blockUI block="dashboardForm" trigger="@(.dasboard-button)">
+                    <p:graphicImage name="images/loader.gif"/>
+                </p:blockUI>
+            </ui:define>
+
+        </ui:composition> 
+    </h:body>
+</html>
+
+
+

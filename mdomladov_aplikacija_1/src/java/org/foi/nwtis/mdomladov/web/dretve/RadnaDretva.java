@@ -6,9 +6,10 @@
 package org.foi.nwtis.mdomladov.web.dretve;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.foi.nwtis.mdomladov.dal.DnevnikDAL;
 import org.foi.nwtis.mdomladov.dal.KorisnikDAL;
+import org.foi.nwtis.mdomladov.helpers.EmailHelper;
 import org.foi.nwtis.mdomladov.komande.IoTKomande;
 import org.foi.nwtis.mdomladov.komande.IoTMasterKomande;
 import org.foi.nwtis.mdomladov.komande.ServerKomande;
@@ -23,13 +25,15 @@ import org.foi.nwtis.mdomladov.konfiguracije.APP_Konfiguracija;
 import org.foi.nwtis.mdomladov.web.podaci.Dnevnik;
 import org.foi.nwtis.mdomladov.web.podaci.Korisnik;
 import org.foi.nwtis.mdomladov.web.slusaci.SlusacAplikacije;
+import static org.foi.nwtis.mdomladov.web.zrna.PomocnoZrno.FORMAT_DATUMA;
+import static org.foi.nwtis.mdomladov.web.zrna.PomocnoZrno.FORMAT_VREMENA;
 
 /**
  *
  *
  * @author Marko Domladovac
  */
-class RadnaDretva extends Thread {
+class RadnaDretva extends EmailHelper {
 
     private final Socket socket;
 
@@ -40,9 +44,9 @@ class RadnaDretva extends Thread {
     private long startTime;
 
     private final KorisnikDAL korisnikDb;
-    
+
     private final DnevnikDAL dnevnikDb;
-    
+
     private Korisnik korisnik;
 
     public RadnaDretva(Socket socket) {
@@ -53,8 +57,8 @@ class RadnaDretva extends Thread {
     }
 
     public RadnaDretva(Socket socket, APP_Konfiguracija konfig) {
-        korisnikDb = new KorisnikDAL();
-        dnevnikDb = new DnevnikDAL();
+        korisnikDb = new KorisnikDAL(konfig);
+        dnevnikDb = new DnevnikDAL(konfig);
         this.socket = socket;
         setName(String.format("zahtjev_%d", redniBroj++));
     }
@@ -73,13 +77,13 @@ class RadnaDretva extends Thread {
 
         String sintaksaServer = String.format("^%s *(PAUSE|STOP|START|STATUS);$", sintaksaKredencijali);
         String sintaksaIotMaster = String.format("^%s *IoT_Master (START|STOP|WORK|WAIT|LOAD|CLEAR|STATUS|LIST);$", sintaksaKredencijali);
-        String sintaksaIot = String.format("^%s *IoT \\d{1,6} ((ADD \"(.+)\" \"(.+)\")|(WORK|WAIT|REMOVE|STATUS));$", sintaksaKredencijali);
+        String sintaksaIot = String.format("^%s *IoT (\\d{1,6}) (((ADD) \"(.+)\" \"(.+)\")|(WORK|WAIT|REMOVE|STATUS));$", sintaksaKredencijali);
 
-        InputStream is = null;
+        InputStreamReader is = null;
         OutputStream os = null;
         try {
             String response = null;
-            is = socket.getInputStream();
+            is = new InputStreamReader(socket.getInputStream(), "Cp1250");
             os = socket.getOutputStream();
 
             StringBuffer sb = new StringBuffer();
@@ -101,9 +105,14 @@ class RadnaDretva extends Thread {
                 response = komanda.aktivirajKomandu();
             } else if (isValid(sintaksaIot, sb) && isValidUser) {
 
-                IoTKomande komanda = privateMatcher.group(6) != null
-                        ? new IoTKomande(privateMatcher.group(6))
-                        : new IoTKomande(privateMatcher.group(4));
+                IoTKomande komanda = null;
+                if (privateMatcher.group(6) != null) {
+                    komanda = new IoTKomande(privateMatcher.group(6));
+                    komanda.setNaziv(privateMatcher.group(7));
+                    komanda.setAdresa(privateMatcher.group(8));
+                } else {
+                    komanda = new IoTKomande(privateMatcher.group(4));
+                }
 
                 response = komanda.aktivirajKomandu(Integer.parseInt(privateMatcher.group(3)));
             } else if (isValid(sintaksaIotMaster, sb) && isValidUser) {
@@ -111,8 +120,8 @@ class RadnaDretva extends Thread {
                 response = komanda.aktivirajKomandu();
             }
             UpravljackaDretva uDretva = (UpravljackaDretva) SlusacAplikacije.getDretve()
-                    .get(SlusacAplikacije.UPRAVLJAC_IME);            
-            
+                    .get(SlusacAplikacije.UPRAVLJAC_IME);
+
             if (response == null) {
                 if (!isValidUser) {
                     response = "ERR 10;";
@@ -127,7 +136,20 @@ class RadnaDretva extends Thread {
 
             os.write(response.getBytes());
             os.flush();
+
+            if (response.contains("OK")) {
+                username = konfiguracija.getUsernameThread();
+                password = konfiguracija.getPasswordThread();
+                SimpleDateFormat dt1 = new SimpleDateFormat(
+                        String.format("%s %s", FORMAT_DATUMA, FORMAT_VREMENA));
+                sb.append(dt1.format(new Date()));
+                saljiPoruku(konfiguracija.getUsernameThread(),
+                        konfiguracija.getUsernameStatistics(),
+                        konfiguracija.getSubject(), sb.toString());
+            }
         } catch (IOException | NumberFormatException ex) {
+            Logger.getLogger(RadnaDretva.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(RadnaDretva.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
@@ -151,8 +173,8 @@ class RadnaDretva extends Thread {
 
     private boolean isValid(String sintaksa, StringBuffer message) {
         setMatcher(sintaksa, message);
-         UpravljackaDretva uDretva = (UpravljackaDretva) SlusacAplikacije.getDretve()
-                    .get(SlusacAplikacije.UPRAVLJAC_IME);
+        UpravljackaDretva uDretva = (UpravljackaDretva) SlusacAplikacije.getDretve()
+                .get(SlusacAplikacije.UPRAVLJAC_IME);
         return privateMatcher.matches()
                 && uDretva.getStanjeServera() != UpravljackaDretva.StanjeServera.STOPPED;
     }
@@ -165,7 +187,7 @@ class RadnaDretva extends Thread {
     private boolean isValidUser() {
         if (privateMatcher.find()) {
             korisnik = korisnikDb
-                    .getKorisnik(privateMatcher.group(1), 
+                    .getKorisnik(privateMatcher.group(1),
                             privateMatcher.group(2));
         }
 
@@ -174,14 +196,14 @@ class RadnaDretva extends Thread {
 
     private Dnevnik getDnevnik(StringBuffer sb) {
         Dnevnik dnevnik = new Dnevnik();
-            dnevnik.setKorisnik(korisnik.getKorisnickoIme());
-            dnevnik.setVrijeme(new Date());
-            dnevnik.setUrl(sb.toString());
-            dnevnik.setVrsta(Dnevnik.getVrste().get(Dnevnik.Vrsta.KOMANDA));
-            dnevnik.setIpadresa("127.0.0.1");
-            dnevnik.setTrajanje((int) (System.currentTimeMillis() - startTime));
-            
-            return dnevnik;
+        dnevnik.setKorisnik(korisnik.getKorisnickoIme());
+        dnevnik.setVrijeme(new Date());
+        dnevnik.setUrl(sb.toString());
+        dnevnik.setVrsta(Dnevnik.getVrste().get(Dnevnik.Vrsta.KOMANDA));
+        dnevnik.setIpadresa("127.0.0.1");
+        dnevnik.setTrajanje((int) (System.currentTimeMillis() - startTime));
+
+        return dnevnik;
     }
 
 }

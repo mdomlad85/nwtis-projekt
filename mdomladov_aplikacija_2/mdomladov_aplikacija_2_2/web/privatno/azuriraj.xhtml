@@ -19,9 +19,15 @@
             </ui:define>
 
             <ui:define name="left">                             
-                <h:link  value=" #{tekst['kontrolna_ploca_link']}" outcome="kontrolnaPloca"></h:link>
+                <h:link  value=" #{tekst['kontrolna_ploca_link']}" outcome="kontrolnaPlocaServer"></h:link>
+                <br/>                  
+                <h:link  value=" #{tekst['kontrolna_ploca_uredjaji_link']}" outcome="kontrolnaPlocaUredjaji"></h:link>
                 <br/>
                 <h:link  value="#{tekst['korisnik_pregled_link']}" outcome="pregledKorisnika"></h:link>
+                <br/>
+                <h:link  value="#{tekst['dnevnik_pregled_link']}" outcome="pregledDnevnika"></h:link>
+                <br/>
+                <h:link  value="#{tekst['pregledPoruka_poruka_link']}" outcome="pregledPoruka"></h:link>
                 <br/>
                 <h:link  value="#{tekst['uredjaj_link']}" outcome="uredjaj"></h:link>
             </ui:define>

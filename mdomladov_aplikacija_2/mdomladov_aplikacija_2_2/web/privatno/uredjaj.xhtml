@@ -20,11 +20,17 @@
             </ui:define>
 
             <ui:define name="left">                              
-                <h:link  value=" #{tekst['kontrolna_ploca_link']}" outcome="kontrolnaPloca"></h:link>
+                <h:link  value=" #{tekst['kontrolna_ploca_link']}" outcome="kontrolnaPlocaServer"></h:link>
+                <br/>                  
+                <h:link  value=" #{tekst['kontrolna_ploca_uredjaji_link']}" outcome="kontrolnaPlocaUredjaji"></h:link>
                 <br/>
                 <h:link  value=" #{tekst['korisnik_azuriranje_link']}" outcome="azuriraj"></h:link>
                 <br/>
                 <h:link  value="#{tekst['korisnik_pregled_link']}" outcome="pregledKorisnika"></h:link>
+                <br/>
+                <h:link  value="#{tekst['dnevnik_pregled_link']}" outcome="pregledDnevnika"></h:link>
+                <br/>
+                <h:link  value="#{tekst['pregledPoruka_poruka_link']}" outcome="pregledPoruka"></h:link>
             </ui:define>
 
 
@@ -63,6 +69,7 @@
                     <h:panelGrid columns="1">
                         <h:column>
                             <p:dataTable var="uredjaj"
+                                         tableStyle="table-layout: auto;"
                                          id='uredjajiList'
                                          value="#{uredjajZrno.uredjaji}" 
                                          paginator="true" rows="#{pomocnoZrno.velicinaStranica}"         
@@ -77,7 +84,7 @@
                                 <p:ajax event="rowEdit" listener="#{uredjajZrno.onRowEdit}" />
                                 <p:ajax event="rowEditCancel" listener="#{uredjajZrno.onRowCancel}" />
 
-                                <p:column style="width:32px" headerText="ID">
+                                <p:column headerText="ID">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{uredjaj.id}" /></f:facet>
                                         <f:facet name="input"><p:inputText id="modelInput" value="#{uredjaj.id}" style="width:100%"/></f:facet>
@@ -89,26 +96,26 @@
                                         <f:facet name="input"><p:inputText value="#{uredjaj.naziv}" style="width:100%"/></f:facet>
                                     </p:cellEditor>
                                 </p:column>
-                                <p:column style="width:32px" headerText="#{tekst['uredjaj_status']}">
+                                <p:column headerText="#{tekst['uredjaj_status']}">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{uredjaj.status}" /></f:facet>
                                         <f:facet name="input"><p:inputText value="#{uredjaj.status}" style="width:100%"/></f:facet>
                                     </p:cellEditor>
                                 </p:column>
-                                <p:column style="width:8n0px" headerText="#{tekst['uredjaj_latitude']}">
+                                <p:column headerText="#{tekst['uredjaj_latitude']}">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{uredjaj.geoloc.latitude}" /></f:facet>
                                         <f:facet name="input"><p:inputText value="#{uredjaj.geoloc.latitude}" style="width:100%"/></f:facet>
                                     </p:cellEditor>
                                 </p:column>
-                                <p:column style="width:80px" headerText="#{tekst['uredjaj_lngitude']}">
+                                <p:column headerText="#{tekst['uredjaj_lngitude']}">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{uredjaj.geoloc.longitude}" /></f:facet>
                                         <f:facet name="input"><p:inputText value="#{uredjaj.geoloc.longitude}" style="width:100%"/></f:facet>
                                     </p:cellEditor>
                                 </p:column>
 
-                                <p:column style="width:32px">
+                                <p:column>
                                     <p:rowEditor />
                                 </p:column>
                                 
@@ -126,6 +133,7 @@
                                 <h3>#{tekst['uredjaj_prognoza_naslov']}</h3>
                                 <h:column>
                                     <p:dataTable  
+                                        tableStyle="table-layout: auto;"
                                         paginator="true" rows="#{pomocnoZrno.velicinaStranica}"         
                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                         var="meteo" 

@@ -793,45 +793,45 @@ exists or setup the property manually. For example like this:
     </target>
     <target depends="compile,-library-inclusion-in-archive-weblogic,-library-inclusion-in-archive-by-user" name="library-inclusion-in-archive"/>
     <target if="is.jars.in.ejbjar" name="-library-inclusion-in-archive-by-user">
-        <copyfiles files="${file.reference.Vjezba_06_1.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.vjezba_03_2.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.fscontext.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.imqbroker.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.imqjmsbridge.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.imqjmsra.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.imqjmx.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.imqstomp.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.Vjezba_06_1.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.vjezba_03_2.jar}" todir="${build.classes.dir}"/>
     </target>
     <target if="is.server.weblogic" name="-library-inclusion-in-archive-weblogic">
-        <basename file="${file.reference.Vjezba_06_1.jar}" property="manifest.file.reference.Vjezba_06_1.jar"/>
-        <basename file="${file.reference.vjezba_03_2.jar}" property="manifest.file.reference.vjezba_03_2.jar"/>
         <basename file="${file.reference.fscontext.jar}" property="manifest.file.reference.fscontext.jar"/>
         <basename file="${file.reference.imqbroker.jar}" property="manifest.file.reference.imqbroker.jar"/>
         <basename file="${file.reference.imqjmsbridge.jar}" property="manifest.file.reference.imqjmsbridge.jar"/>
         <basename file="${file.reference.imqjmsra.jar}" property="manifest.file.reference.imqjmsra.jar"/>
         <basename file="${file.reference.imqjmx.jar}" property="manifest.file.reference.imqjmx.jar"/>
         <basename file="${file.reference.imqstomp.jar}" property="manifest.file.reference.imqstomp.jar"/>
+        <basename file="${file.reference.Vjezba_06_1.jar}" property="manifest.file.reference.Vjezba_06_1.jar"/>
+        <basename file="${file.reference.vjezba_03_2.jar}" property="manifest.file.reference.vjezba_03_2.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
             <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 jar-6 jar-7 jar-8 "/>
-            <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.Vjezba_06_1.jar}"/>
-            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.vjezba_03_2.jar}"/>
-            <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.fscontext.jar}"/>
-            <attribute name="jar-4-Extension-Name" value="${manifest.file.reference.imqbroker.jar}"/>
-            <attribute name="jar-5-Extension-Name" value="${manifest.file.reference.imqjmsbridge.jar}"/>
-            <attribute name="jar-6-Extension-Name" value="${manifest.file.reference.imqjmsra.jar}"/>
-            <attribute name="jar-7-Extension-Name" value="${manifest.file.reference.imqjmx.jar}"/>
-            <attribute name="jar-8-Extension-Name" value="${manifest.file.reference.imqstomp.jar}"/>
+            <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.fscontext.jar}"/>
+            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.imqbroker.jar}"/>
+            <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.imqjmsbridge.jar}"/>
+            <attribute name="jar-4-Extension-Name" value="${manifest.file.reference.imqjmsra.jar}"/>
+            <attribute name="jar-5-Extension-Name" value="${manifest.file.reference.imqjmx.jar}"/>
+            <attribute name="jar-6-Extension-Name" value="${manifest.file.reference.imqstomp.jar}"/>
+            <attribute name="jar-7-Extension-Name" value="${manifest.file.reference.Vjezba_06_1.jar}"/>
+            <attribute name="jar-8-Extension-Name" value="${manifest.file.reference.vjezba_03_2.jar}"/>
         </manifest>
     </target>
     <target depends="compile" name="library-inclusion-in-manifest">
-        <copyfiles files="${file.reference.Vjezba_06_1.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.vjezba_03_2.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.fscontext.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.imqbroker.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.imqjmsbridge.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.imqjmsra.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.imqjmx.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.imqstomp.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.Vjezba_06_1.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.vjezba_03_2.jar}" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
     <target name="-copy-meta-inf">

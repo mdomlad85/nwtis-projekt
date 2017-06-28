@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -21,6 +22,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.search.SearchTerm;
 import javax.mail.search.StringTerm;
+import static org.foi.nwtis.mdomladov.helpers.CoreHelper.konfiguracija;
 import org.foi.nwtis.mdomladov.konfiguracije.NeispravnaKonfiguracija;
 import org.foi.nwtis.mdomladov.konfiguracije.NemaKonfiguracije;
 
@@ -137,6 +139,16 @@ public abstract class EmailHelper extends CoreHelper {
 
         return messages;
     }
+    
+    protected void obrisi(String mapa, int messageNumber){
+        try {
+            spoji();
+            inicijalizirajMapu(mapa);
+            deleteEmail(messageNumber);
+        } catch (MessagingException ex) {
+            Logger.getLogger(EmailHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      *
@@ -176,13 +188,27 @@ public abstract class EmailHelper extends CoreHelper {
         return null;
     }
 
+    private void deleteEmail(int messageNumber) {
+        try {
+            //čitanje mailova
+            folder.open(Folder.READ_WRITE);
+            Message message = folder.getMessage(messageNumber);
+            message.setFlag(Flags.Flag.DELETED, true);
+        } catch (MessagingException ex) {
+            Logger.getLogger(EmailHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private void readEmails(Integer porukaOd, Integer porukaDo, String izraz) throws MessagingException {
         //čitanje mailova
         folder.open(Folder.READ_ONLY);
         if (porukaOd != null && porukaDo != null) {
             int porukaUMapi = folder.getMessageCount();
-            if (porukaDo > porukaUMapi) {
-                porukaDo = porukaUMapi;
+            int porukaDoTemp = porukaUMapi - porukaOd + 1;
+            porukaOd = porukaUMapi - porukaDo + 1;
+            porukaDo = porukaDoTemp;
+            if (porukaOd < 1) {
+                porukaOd = 1;
             }
             messages = folder.getMessages(porukaOd, porukaDo);
             if (izraz != null && !izraz.isEmpty()) {
@@ -240,7 +266,7 @@ public abstract class EmailHelper extends CoreHelper {
 
         if (!folder.exists()) {
             folder.create(Folder.HOLDS_MESSAGES);
-        }
+        } 
     }
 
     /**

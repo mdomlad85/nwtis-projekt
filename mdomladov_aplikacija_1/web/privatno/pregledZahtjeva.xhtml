@@ -35,6 +35,7 @@
                                 <h3>Pregled dnevnika</h3>
                                 <h:column>
                                     <p:dataTable var="dnevnik" 
+                                                 tableStyle="table-layout: auto;"
                                                  value="#{pregledZahtjeva.dnevnici}" 
                                                  paginator="true" rows="#{pomocnoZrno.velicinaStranica}"         
                                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">

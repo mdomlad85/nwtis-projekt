@@ -57,8 +57,8 @@ public class SlusacAplikacije implements ServletContextListener {
             context.setAttribute(APP_KONFIG, bpKonfig);
 
             dretve = new HashMap<>();
-            upravljackaDretva = new UpravljackaDretva();
-            preuzmiMeteoPodatke = new PreuzmiMeteoPodatke();
+            upravljackaDretva = new UpravljackaDretva(bpKonfig);
+            preuzmiMeteoPodatke = new PreuzmiMeteoPodatke(bpKonfig);
             preuzmiMeteoPodatke.setInterval(bpKonfig.getTimeSecThread() * 1000);
             preuzmiMeteoPodatke.setApiKey(bpKonfig.getOWApiKey());
             upravljackaDretva.setKonfiguracija(bpKonfig);

@@ -5,6 +5,7 @@
  */
 package org.foi.nwtis.mdomladov.web.zrna;
 
+import org.foi.nwtis.mdomladov.podaci.Izbornik;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;

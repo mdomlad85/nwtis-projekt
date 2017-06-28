@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.foi.nwtis.mdomladov.web.zrna;
+package org.foi.nwtis.mdomladov.podaci;
 
 import java.io.Serializable;
-import javax.annotation.ManagedBean;
 
 /**
  *
  * @author Zeus
  */
-@ManagedBean
 public class Izbornik implements Serializable {
 
     private String labela;

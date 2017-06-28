@@ -5,16 +5,11 @@
  */
 package org.foi.nwtis.mdomladov.ejb.sb;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
-import javax.ejb.LocalBean;
+import javax.ejb.Startup;
 import org.foi.nwtis.mdomladov.dretve.ObradaPoruka;
 import org.foi.nwtis.mdomladov.konfiguracije.APP_Konfiguracija;
-import org.foi.nwtis.mdomladov.konfiguracije.NeispravnaKonfiguracija;
-import org.foi.nwtis.mdomladov.konfiguracije.NemaKonfiguracije;
 
 /**
  * Kreiranje Singleton SB pokreće dretvu (konfiguracijom se određuje pravilni
@@ -26,26 +21,19 @@ import org.foi.nwtis.mdomladov.konfiguracije.NemaKonfiguracije;
  * @author Marko Domladovac
  */
 @Singleton
-@LocalBean
+@Startup
 public class UpravljackoZrno {
-    
+
     private static int brojac;
 
     private ObradaPoruka dretva;
 
     private static APP_Konfiguracija konfiguracija;
 
-    @PostConstruct
-    private void init() {
-        try {
-            String filepath2 = this.getClass().getResource("NWTiS.db.config_1.xml").getFile();
-            String filepath = "E:\\Faks\\FOI\\Moje\\DS_1_GOD\\Ljetni\\NWTIS\\Projekt\\Programski_kod\\mdomladov_aplikacija_2\\mdomladov_aplikacija_2_1\\NWTiS.db.config_1.xml";
-            konfiguracija = new APP_Konfiguracija(filepath);
-            dretva = new ObradaPoruka();
-            //dretva.start();
-        } catch (NemaKonfiguracije | NeispravnaKonfiguracija ex) {
-            Logger.getLogger(UpravljackoZrno.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void init(APP_Konfiguracija konf) {
+        konfiguracija = konf;
+        dretva = new ObradaPoruka();
+        dretva.start();
     }
 
     @PreDestroy
@@ -61,9 +49,9 @@ public class UpravljackoZrno {
 
     public static int getBrojac() {
         return brojac;
-    }  
-    
-    public static int getBrojacIPovecaj(){
+    }
+
+    public static int getBrojacIPovecaj() {
         return brojac++;
     }
 }

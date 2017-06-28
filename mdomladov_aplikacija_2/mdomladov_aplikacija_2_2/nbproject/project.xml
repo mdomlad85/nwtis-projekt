@@ -11,9 +11,6 @@
             <name>mdomladov_aplikacija_2_2</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <web-module-libraries>
-                <library dirs="100">
-                    <file>${reference.mdomladov_aplikacija_2_1.dist}</file>
-                </library>
                 <library dirs="200">
                     <file>${file.reference.Vjezba_06_1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
@@ -36,6 +33,10 @@
                 </library>
                 <library dirs="200">
                     <file>${file.reference.okio-1.13.0.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="100">
+                    <file>${reference.mdomladov_aplikacija_2_1.dist}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>

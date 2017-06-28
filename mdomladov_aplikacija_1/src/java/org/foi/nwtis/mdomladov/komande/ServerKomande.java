@@ -57,7 +57,7 @@ public class ServerKomande {
         naredbe.put("start", Naredba.START);
         naredbe.put("stop", Naredba.STOP);
         naredbe.put("pause", Naredba.PAUSE);
-        naredbe.put("stat", Naredba.STAT);
+        naredbe.put("status", Naredba.STAT);
 
         this.naredba = naredbe.get(naredba.toLowerCase());
     }

@@ -107,7 +107,7 @@ public class IoTMasterKomande {
                 }
                 break;
             case WORK:
-                if (statusKorisnika == StatusKorisnika.BLOKIRAN
+                if (statusKorisnika != StatusKorisnika.AKTIVAN
                         && iotMasterKlijent.aktivirajGrupuIoT()) {
 
                     response = "OK 10;";
@@ -137,9 +137,12 @@ public class IoTMasterKomande {
 
                     response = "OK 10;";
                 }
+                break;
             case STATUS:
                 switch (statusKorisnika) {
+                    case PASIVAN:
                     case BLOKIRAN:
+                    case NEAKTIVAN:
                         response = "OK 24;";
                         break;
                     case AKTIVAN:
@@ -162,7 +165,7 @@ public class IoTMasterKomande {
                 }
         }
 
-        if (errNum == -1) {
+        if (errNum != -1) {
             response = String.format("ERR %d;", errNum);
         }
 

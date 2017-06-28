@@ -127,7 +127,7 @@ public class IoTKomande {
                 break;
         }
         
-        if(errNum == -1){
+        if(errNum != -1){
             response = String.format("ERR %d;", errNum);
         }
 
