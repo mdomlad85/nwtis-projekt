@@ -5,6 +5,10 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+     <h:head>
+        <title>#{tekst['korisnik_uredi_naslov']}</title>
+    </h:head>
 
     <h:body>
 
@@ -28,6 +32,8 @@
                 <h:link  value="#{tekst['dnevnik_pregled_link']}" outcome="pregledDnevnika"></h:link>
                 <br/>
                 <h:link  value="#{tekst['pregledPoruka_poruka_link']}" outcome="pregledPoruka"></h:link>
+                <br/>
+                <h:link  value="#{tekst['mqtt_pregled_link']}" outcome="pregledMqtt"></h:link>
                 <br/>
                 <h:link  value="#{tekst['uredjaj_link']}" outcome="uredjaj"></h:link>
             </ui:define>

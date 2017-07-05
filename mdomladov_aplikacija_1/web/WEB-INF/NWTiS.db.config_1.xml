@@ -31,4 +31,10 @@
 <entry key="service.user.password">ILnC2</entry>
 <entry key="socket.port">35000</entry>
 <entry key="service.pagesize">5</entry>
+<entry key="mqtt.host">nwtis.foi.hr</entry>
+<entry key="mqtt.port">61613</entry>
+<entry key="mqtt.username">mdomladov</entry>
+<entry key="mqtt.password">ILnC2</entry>
+<entry key="mqtt.tema">NWTiS</entry>
+<entry key="mqtt.slot">10</entry>
 </properties>

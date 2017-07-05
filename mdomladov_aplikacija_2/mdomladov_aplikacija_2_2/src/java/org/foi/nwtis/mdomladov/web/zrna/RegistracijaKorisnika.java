@@ -11,11 +11,13 @@ import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 import okhttp3.Response;
+import org.foi.nwtis.mdomladov.dretve.MqttDretva;
 import org.foi.nwtis.mdomladov.podaci.Korisnik;
 import org.foi.nwtis.mdomladov.web.filteri.KontrolaPristupa;
 
@@ -52,6 +54,9 @@ public class RegistracijaKorisnika extends KorisnikZrno {
                     HttpSession session = (HttpSession) exContext.getSession(false);
                     exContext.redirect("privatno/pregledKorisnika.xhtml");
                     session.setAttribute(KontrolaPristupa.KORISNIK_ATTRIBUTE, korisnik);
+                    MqttDretva mqttWorker = new MqttDretva(korisnickoIme, lozinka);
+                    session.setAttribute(ZrnoUpravljanjaSjednicom.MQTT_WORKER, mqttWorker);
+                    mqttWorker.start();
                 } else {
                     msgText = jeziciBundle.getString("registracija_pogreska_admin");
                 }

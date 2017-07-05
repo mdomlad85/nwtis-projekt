@@ -3,8 +3,8 @@
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
         <Node id="privatno/uredjaj.xhtml" x="961" y="439" zoom="true"/>
-        <Node id="privatno/pregledDnevnika.xhtml" x="1216" y="229" zoom="true"/>
         <Node id="login.xhtml" x="694" y="128" zoom="true"/>
+        <Node id="privatno/pregledDnevnika.xhtml" x="1216" y="229" zoom="true"/>
         <Node id="privatno/kontrolnaPlocaUredjaji.xhtml" x="1186" y="99" zoom="true"/>
         <Node id="index.xhtml" x="269" y="208" zoom="true"/>
         <Node id="predlozak.xhtml" x="49" y="51" zoom="true"/>

@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>#{tekst['pregledPoruka_poruka_naslov']}</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../predlozak.xhtml">
+
+            <ui:define name="script">
+                <h:outputScript library="js" name="jms1_ws.js" target="body" /> 
+            </ui:define>
+
+            <ui:define name="left">                
+                <h:link  value=" #{tekst['kontrolna_ploca_link']}" outcome="kontrolnaPlocaServer"></h:link>
+            </ui:define>
+
+            <ui:define name="naslov">
+                #{tekst['pregledPoruka_poruka_naslov']}
+            </ui:define>
+
+            <ui:define name="top">
+                #{tekst['pregledPoruka_poruka_naslov']}
+            </ui:define>
+
+            <ui:define name="content">
+                <h:panelGroup class="center">
+                    <h:form>
+                        <h:panelGroup id="dnevnik">
+                            <h:panelGrid columns="1">
+                                <h3>#{tekst['pregledPoruka_poruka_lista_naslov']}</h3>
+                                <h:column>
+                                    <p:dataTable var="poruka"
+                                                 class="poruka"
+                                                 tableStyle="table-layout: auto;"
+                                                 value="#{pregledPorukaZrno.poruke}" 
+                                                 paginator="true" rows="#{pomocnoZrno.velicinaStranica}"         
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                                        
+                                        <p:column headerText="Brojač">
+                                            <h:outputText value="#{poruka.brojac}" />
+                                        </p:column>
+                                        
+                                        <p:column headerText="Ispravno">
+                                            <h:outputText value="#{poruka.ukupnoIspravnihPoruka}" />
+                                        </p:column>
+                                        
+                                        <p:column headerText="Ukupno">
+                                            <h:outputText value="#{poruka.ukupnoPoruka}" />
+                                        </p:column>
+                                        
+                                        
+
+                                        <p:column>
+                                            <p:commandButton value="X" 
+                                                             class="dasboard-button"
+                                                             actionListener="#{pregledPorukaZrno.obrisi(poruka.brojac)}" 
+                                                             update="@(.poruka)" />
+                                        </p:column>   
+                                    </p:dataTable>
+                                </h:column>
+                            </h:panelGrid>
+                        </h:panelGroup>     
+                        
+                        <p:remoteCommand name="dodajPoruku" actionListener="#{pregledPorukaZrno.dodaj()}" update="@(.poruka)"/>
+                    </h:form>
+                </h:panelGroup>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

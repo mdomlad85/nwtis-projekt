@@ -93,7 +93,7 @@ public class KontrolnaPlocaZrno extends ApstraktnoZrno {
         String msg = String.format(jeziciBundle.getString("server_komande_pogreska"), SocketHelper.IOT_ADD);
         if (adresa != null && !adresa.isEmpty() && naziv != null && !naziv.isEmpty() && id != 0) {
             try {
-                msg = socketHelper.posaljiNoviUredjajNaredbu(id, naziv, adresa);
+            msg = socketHelper.posaljiNoviUredjajNaredbu(id, naziv, adresa);
             String uredjaji = socketHelper.posaljiNaredbu(SocketHelper.IOT_MASTER_LIST, SocketHelper.IOT_MASTER);
             napuniUredjajeSelectList(uredjaji);
             msg = jeziciBundle.getString("uspjeh_uredjaj_dodan");
@@ -101,6 +101,7 @@ public class KontrolnaPlocaZrno extends ApstraktnoZrno {
                 Logger.getLogger(KontrolnaPlocaZrno.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        setMessage(msg);
     }
 
     public void setMessage(String msgText) {

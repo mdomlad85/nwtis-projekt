@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>#{tekst['pregledPoruka_poruka_naslov']}</title>
     </h:head>
     <h:body>
         <ui:composition template="../predlozak.xhtml">
@@ -29,6 +29,8 @@
                 <h:link  value="#{tekst['uredjaj_link']}" outcome="uredjaj"></h:link>
                 <br/>
                 <h:link  value="#{tekst['dnevnik_pregled_link']}" outcome="pregledDnevnika"></h:link>
+                <br/>
+                <h:link  value="#{tekst['mqtt_pregled_link']}" outcome="pregledMqtt"></h:link>
             </ui:define>
 
 

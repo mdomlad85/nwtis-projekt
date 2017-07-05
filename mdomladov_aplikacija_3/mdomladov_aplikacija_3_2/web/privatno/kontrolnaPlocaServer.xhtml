@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+
+        <ui:composition template="../predlozak.xhtml">
+
+            <ui:define name="script">
+                <h:outputScript library="js" name="jms2_ws.js" target="body" /> 
+            </ui:define>
+
+            <ui:define name="naslov">
+                #{tekst['kontrolna_ploca_naslov']}
+            </ui:define>
+
+            <ui:define name="top">
+                #{tekst['kontrolna_ploca_naslov']}
+            </ui:define>
+
+            <ui:define name="left">             
+                <h:link  value=" #{tekst['pregledPoruka_poruka_link']}" outcome="pregledPoruka"></h:link>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form id="dashboardForm" style="margin-bottom: 30px"> 
+                    <p:growl id="msgs" autoUpdate="true" showDetail="true" life="5000" />
+
+                    <h:panelGrid columns="1">
+                        <h3>#{tekst['pregledPoruka_poruka_lista_naslov']}</h3>
+                        <h:column>
+                            <p:dataTable var="poruka"
+                                         class="poruka"
+                                         tableStyle="table-layout: auto;"
+                                         value="#{kontrolnaPlocaZrno.poruke}" 
+                                         paginator="true" rows="#{pomocnoZrno.velicinaStranica}"         
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                                <p:column headerText="ID">
+                                    <h:outputText value="#{poruka.brojJmsPoruke}" />
+                                </p:column>
+
+                                <p:column headerText="Slot">
+                                    <h:outputText value="#{poruka.brojPorukaSlot}" />
+                                </p:column>
+
+                                <p:column headerText="Start">
+                                    <h:outputText value="#{poruka.pocetakSlota}" />
+                                </p:column>
+
+                                <p:column headerText="End">
+                                    <h:outputText value="#{poruka.krajSlota}" />
+                                </p:column>
+
+                                <p:column>
+                                    <p:commandButton value="X" 
+                                                     class="dasboard-button"
+                                                     actionListener="#{kontrolnaPlocaZrno.obrisi(poruka.brojJmsPoruke)}" 
+                                                     update="@(.poruka)" />
+                                </p:column>   
+                            </p:dataTable>
+                        </h:column>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="5" cellpadding="5" id="iotMaster" class="button-group">
+                        <f:facet name="header">
+                            <p:outputLabel value="#{tekst['kontrolna_ploca_master_naslov']}" />
+                        </f:facet>
+
+                        <p:commandButton value="#{tekst['kontrolna_ploca_iot_start']}" 
+                                         class="dasboard-button"
+                                         actionListener="#{kontrolnaPlocaZrno.masterAction('start')}" 
+                                         icon="ui-icon-play" />
+
+                        <p:commandButton value="#{tekst['kontrolna_ploca_iot_stop']}" 
+                                         class="dasboard-button"
+                                         actionListener="#{kontrolnaPlocaZrno.masterAction('stop')}" 
+                                         icon="ui-icon-stop" />
+
+                        <p:commandButton value="#{tekst['kontrolna_ploca_iot_work']}"
+                                         class="dasboard-button"
+                                         actionListener="#{kontrolnaPlocaZrno.masterAction('work')}" 
+                                         icon="ui-icon-clipboard" />
+
+                        <p:commandButton value="#{tekst['kontrolna_ploca_iot_wait']}" 
+                                         class="dasboard-button"
+                                         actionListener="#{kontrolnaPlocaZrno.masterAction('wait')}" 
+                                         icon="ui-icon-script" />
+
+                        <p:commandButton value="#{tekst['kontrolna_ploca_iot_status']}"
+                                         class="dasboard-button"
+                                         actionListener="#{kontrolnaPlocaZrno.masterAction('status')}" 
+                                         icon="ui-icon-help" />
+                    </h:panelGrid>
+                    
+                    <p:remoteCommand name="dodajPoruku" actionListener="#{kontrolnaPlocaZrno.dodaj()}" update="@(.poruka)"/>
+                </h:form>
+
+                <p:blockUI block="dashboardForm" trigger="@(.dasboard-button)">
+                    <p:graphicImage name="images/loader.gif"/>
+                </p:blockUI>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+
+

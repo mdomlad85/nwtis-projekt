@@ -39,7 +39,7 @@ public class PregledDnevnika implements Serializable {
     @PostConstruct
     private void init() {
         db = new DnevnikDAL();
-        dnevnici = db.dajDnevnikZaVrstu(Dnevnik.Vrsta.KOMANDA);
+        dnevnici = db.dajDnevnik();
     }
 
     public List<Dnevnik> getDnevnici() {

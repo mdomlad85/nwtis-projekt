@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>#{tekst['korisnik_pregled_naslov']}</title>
     </h:head>
     <h:body>
         <ui:composition template="../predlozak.xhtml">
@@ -31,6 +31,8 @@
                 <h:link  value="#{tekst['dnevnik_pregled_link']}" outcome="pregledDnevnika"></h:link>
                 <br/>
                 <h:link  value="#{tekst['pregledPoruka_poruka_link']}" outcome="pregledPoruka"></h:link>
+                <br/>
+                <h:link  value="#{tekst['mqtt_pregled_link']}" outcome="pregledMqtt"></h:link>
             </ui:define>
 
 
@@ -139,9 +141,6 @@
                                         var="meteo" 
                                         value="#{uredjajZrno.meteoPodaci}">
                                         
-                                        <p:column headerText="#{tekst['uredjaj_prognoza_datum']}">
-                                            <h:outputText value="#{pomocnoZrno.formatDate(meteo.lastUpdate)}" />
-                                        </p:column>
                                         <p:column headerText="#{tekst['uredjaj_naziv']}">
                                             <h:outputText value="#{meteo.naziv}" />
                                         </p:column>

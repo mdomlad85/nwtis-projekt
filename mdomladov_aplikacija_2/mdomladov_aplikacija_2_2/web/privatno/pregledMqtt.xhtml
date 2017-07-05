@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{tekst['mqtt_pregled_naslov']}</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../predlozak.xhtml">
+
+            <ui:define name="naslov">
+                #{tekst['mqtt_pregled_naslov']}
+            </ui:define>
+
+            <ui:define name="top">
+                #{tekst['mqtt_pregled_naslov']}
+            </ui:define>
+
+            <ui:define name="left">                               
+                <h:link  value=" #{tekst['kontrolna_ploca_link']}" outcome="kontrolnaPlocaServer"></h:link>
+                <br/>                  
+                <h:link  value=" #{tekst['kontrolna_ploca_uredjaji_link']}" outcome="kontrolnaPlocaUredjaji"></h:link>
+                <br/>
+                <h:link  value=" #{tekst['korisnik_azuriranje_link']}" outcome="azuriraj"></h:link>
+                <br/>
+                <h:link  value="#{tekst['uredjaj_link']}" outcome="uredjaj"></h:link>
+                <br/>
+                <h:link  value="#{tekst['korisnik_pregled_link']}" outcome="pregledKorisnika"></h:link>
+                <br/>
+                <h:link  value="#{tekst['pregledPoruka_poruka_link']}" outcome="pregledPoruka"></h:link>
+                <br/>
+                <h:link  value="#{tekst['dnevnik_pregled_link']}" outcome="pregledDnevnika"></h:link>
+            </ui:define>
+
+
+
+            <ui:define name="content">
+                <h:panelGroup class="center">
+                    <h:form>
+                        <h:panelGroup>
+                            <h:panelGrid columns="1">
+                                <h3>#{tekst['mqtt_lista_naslov']}</h3>
+                                <h:column>
+                                    <p:dataTable var="mqtt"
+                                                 class="mqtt-table"
+                                                 tableStyle="table-layout: auto;"
+                                                 value="#{pregledMqtt.poruke}" 
+                                                 paginator="true" rows="#{pomocnoZrno.velicinaStranica}"         
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                                        <p:column headerText="ID">
+                                            <h:outputText value="#{mqtt.id}" />
+                                        </p:column>
+                                        <p:column headerText="IoT ID">
+                                            <h:outputText value="#{mqtt.iotId}" />
+                                        </p:column>
+                                        <p:column headerText="Status">
+                                            <h:outputText value="#{mqtt.status}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['mqtt_tekst']}">
+                                            <h:outputText value="#{mqtt.tekst}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['mqtt_vrijeme']}">
+                                            <h:outputText value="#{pomocnoZrno.formatDate(mqtt.vrijemeReceived)}" />
+                                        </p:column>
+                                        <p:column headerText="#{tekst['mqtt_trajanje']} (ms)">
+                                            <h:outputText value="#{mqtt.trajanje}" />
+                                        </p:column>  
+
+                                        <p:column>
+                                            <p:commandButton value="X" 
+                                                             class="dasboard-button"
+                                                             actionListener="#{pregledMqtt.obrisi(mqtt.id)}" 
+                                                             update="@(.mqtt-table)" />
+                                        </p:column>  
+                                    </p:dataTable>
+                                </h:column>
+                            </h:panelGrid>
+                        </h:panelGroup>                        
+                    </h:form>
+                </h:panelGroup>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>
+
+
+

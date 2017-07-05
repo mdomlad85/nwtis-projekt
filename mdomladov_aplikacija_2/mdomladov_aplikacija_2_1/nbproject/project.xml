@@ -5,7 +5,6 @@
         <data xmlns="http://www.netbeans.org/ns/j2ee-ejbjarproject/3">
             <name>mdomladov_aplikacija_2_1</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
-            <included-library dirs="200">file.reference.fscontext.jar</included-library>
             <included-library dirs="200">file.reference.imqbroker.jar</included-library>
             <included-library dirs="200">file.reference.imqjmsbridge.jar</included-library>
             <included-library dirs="200">file.reference.imqjmsra.jar</included-library>
@@ -13,6 +12,10 @@
             <included-library dirs="200">file.reference.imqstomp.jar</included-library>
             <included-library dirs="200">file.reference.Vjezba_06_1.jar</included-library>
             <included-library dirs="200">file.reference.vjezba_03_2.jar</included-library>
+            <included-library dirs="200">file.reference.okhttp-3.8.1.jar</included-library>
+            <included-library dirs="200">file.reference.okio-1.13.0.jar</included-library>
+            <included-library dirs="200">libs.jpa2-persistence.classpath</included-library>
+            <included-library dirs="200">libs.jpa20-persistence.classpath</included-library>
             <source-roots>
                 <root id="src.dir"/>
             </source-roots>

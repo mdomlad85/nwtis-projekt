@@ -8,15 +8,17 @@ package org.foi.nwtis.mdomladov.web.zrna;
 import java.io.IOException;
 import javax.inject.Named;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
-import org.foi.nwtis.mdomladov.helpers.JsonHelper;
+import org.foi.nwtis.mdomladov.dretve.MqttDretva;
+import org.foi.nwtis.mdomladov.ejb.sb.ZrnoAutorizacije;
 import org.foi.nwtis.mdomladov.podaci.Korisnik;
-import org.foi.nwtis.mdomladov.rest.klijenti.KorisnikRESTKlijent;
 import org.foi.nwtis.mdomladov.web.filteri.KontrolaPristupa;
 
 /**
@@ -26,15 +28,15 @@ import org.foi.nwtis.mdomladov.web.filteri.KontrolaPristupa;
 @Named(value = "prijavaKorisnika")
 @RequestScoped
 public class PrijavaKorisnika extends ApstraktnoZrno implements Serializable {
+    
+    @EJB
+    private ZrnoAutorizacije zrnoAutorizacije;
 
     private String korisnickoIme;
 
     private String lozinka;
 
-    private final KorisnikRESTKlijent korisnikREST;
-
     public PrijavaKorisnika() {
-        this.korisnikREST = new KorisnikRESTKlijent();
     }
 
     public void login(ActionEvent event) throws IOException {
@@ -44,9 +46,8 @@ public class PrijavaKorisnika extends ApstraktnoZrno implements Serializable {
         boolean loggedIn = false;
 
         if (isAllSet()) {
-            Korisnik korisnik = JsonHelper
-                    .parseKorisnik(korisnikREST.getKorisnikRESTResource(korisnickoIme));
-            if (korisnik == null || !korisnik.getKorisnickaLozinka().equals(lozinka)) {
+            Korisnik korisnik = zrnoAutorizacije.autenticirajKorisnika(korisnickoIme, lozinka);
+            if (korisnik == null) {
                 msgText = jeziciBundle.getString("login_neispravni_kredencijali");
             } else {
                 loggedIn = true;
@@ -54,6 +55,9 @@ public class PrijavaKorisnika extends ApstraktnoZrno implements Serializable {
                 HttpSession session = (HttpSession) exContext.getSession(false);
                 exContext.redirect("privatno/pregledKorisnika.xhtml");
                 session.setAttribute(KontrolaPristupa.KORISNIK_ATTRIBUTE, korisnik);
+                MqttDretva mqttWorker = new MqttDretva(korisnickoIme, lozinka);
+                session.setAttribute(ZrnoUpravljanjaSjednicom.MQTT_WORKER, mqttWorker);
+                mqttWorker.start();
             }
         } else {
             msgText = jeziciBundle.getString("login_nepotpuna_forma");

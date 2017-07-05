@@ -89,7 +89,7 @@ public class IoTMasterKomande {
 
         switch (naredba) {
             case START:
-                if (statusKorisnika == StatusKorisnika.NEPOSTOJI
+                if (statusKorisnika != StatusKorisnika.AKTIVAN
                         && iotMasterKlijent.registrirajGrupuIoT()) {
 
                     response = "OK 10;";

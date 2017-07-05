@@ -108,6 +108,12 @@ public class OWMKlijent {
         return null;
     }
 
+    /**
+     * Optimizacija 
+     * 
+     * @param geoloc
+     * @return 
+     */
     public MeteoPodaci getRealTimeWeather(Lokacija geoloc) {
         if (lokacije == null) {
             lokacije = new HashMap<>();

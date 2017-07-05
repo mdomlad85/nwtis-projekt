@@ -5,7 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>#{tekst['dnevnik_pregled_naslov']}</title>
     </h:head>
     <h:body>
         <ui:composition template="../predlozak.xhtml">
@@ -30,6 +30,8 @@
                 <h:link  value="#{tekst['korisnik_pregled_link']}" outcome="pregledKorisnika"></h:link>
                 <br/>
                 <h:link  value="#{tekst['pregledPoruka_poruka_link']}" outcome="pregledPoruka"></h:link>
+                <br/>
+                <h:link  value="#{tekst['mqtt_pregled_link']}" outcome="pregledMqtt"></h:link>
             </ui:define>
 
 

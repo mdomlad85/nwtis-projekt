@@ -12,8 +12,10 @@ import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.json.JsonValue;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -70,10 +72,17 @@ public class GMKlijent {
         String odgovor = webResource.request(MediaType.APPLICATION_JSON).get(String.class);
         JsonReader reader = Json.createReader(new StringReader(odgovor));
         JsonObject jo = reader.readObject();
-        String fmtAdresa = jo.getJsonArray("results")
-                .getJsonObject(0)
-                .getJsonString("formatted_address")
-                .getString();
+        JsonArray result = jo.getJsonArray("results");
+        
+        String fmtAdresa = "";
+        
+        for (int i = 0; i < result.size(); i++) {
+            if(result.getJsonObject(i).containsKey("formatted_address")){
+                fmtAdresa = result.getJsonObject(i).getString("formatted_address");
+                break;
+            }
+        }
+        
         return fmtAdresa;
     }
 }

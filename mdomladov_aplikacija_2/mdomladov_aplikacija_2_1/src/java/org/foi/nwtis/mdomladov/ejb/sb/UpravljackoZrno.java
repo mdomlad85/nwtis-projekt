@@ -30,6 +30,12 @@ public class UpravljackoZrno {
 
     private static APP_Konfiguracija konfiguracija;
 
+    /**
+     * Inicijalizirana od strane slusaca jer 
+     * je potreba konfiguracija
+     * 
+     * @param konf 
+     */
     public void init(APP_Konfiguracija konf) {
         konfiguracija = konf;
         dretva = new ObradaPoruka();
