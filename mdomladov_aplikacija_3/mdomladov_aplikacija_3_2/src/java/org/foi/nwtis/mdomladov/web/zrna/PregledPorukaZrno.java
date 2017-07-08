@@ -13,7 +13,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import org.foi.nwtis.mdomladov.ejb.sb.UpraviteljJmsZrno;
 import org.foi.nwtis.mdomladov.helpers.JsonHelper;
-import org.foi.nwtis.mdomladov.podaci.Jms2Poruka;
 import org.foi.nwtis.mdomladov.podaci.Statistika;
 
 /**

@@ -29,6 +29,7 @@ import org.foi.nwtis.mdomladov.web.socketi.Jms2Coder;
 public class WebsocketClientEndpoint {
 
     Session userSession = null;
+    
     private MessageHandler messageHandler;
 
     public WebsocketClientEndpoint(URI endpointURI) {

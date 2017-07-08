@@ -78,7 +78,16 @@ public class UpraviteljJmsZrno {
     }
 
     public void addNwtis1Poruka(Statistika poruka) {
-        nwtis1Poruke.add(poruka);
+        boolean exists = false;
+        for (Statistika statistika : nwtis1Poruke) {
+            if(statistika.getBrojac() == poruka.getBrojac()){
+                exists = true;
+                break;
+            }
+        }
+        if(!exists){
+            nwtis1Poruke.add(poruka);
+        }
     }
 
     public void setNwtis1Poruke(ArrayList<Statistika> nwtis1Poruke) {
@@ -97,7 +106,16 @@ public class UpraviteljJmsZrno {
     }
 
     public void addNwtis2Poruka(Jms2Poruka poruka) {
-        nwtis2Poruke.add(poruka);
+         boolean exists = false;
+        for (Jms2Poruka jms2 : nwtis2Poruke) {
+            if(jms2.getBrojJmsPoruke() == poruka.getBrojJmsPoruke()){
+                exists = true;
+                break;
+            }
+        }
+        if(!exists){
+            nwtis2Poruke.add(poruka);
+        }
     }
 
     public ArrayList<Jms2Poruka> getNwtis2Poruke() {

@@ -15,27 +15,21 @@ import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.server.ServerEndpoint;
-import org.foi.nwtis.mdomladov.helpers.JsonHelper;
-import org.foi.nwtis.mdomladov.podaci.Jms2Poruka;
 
 /**
  *
  * @author Marko Domladovac
  */
-@ServerEndpoint(
-        value = "/jms2",
-        decoders = {Jms2Coder.class},
-        encoders = {Jms2Coder.class}
-)
+@ServerEndpoint(value = "/jms2")
 public class Jms2WebSocket {
 
-    private static List<Session> sessions = new ArrayList<>();
+    private static final List<Session> sessions = new ArrayList<>();
 
     @OnMessage
-    public Jms2Poruka onMessage(Jms2Poruka poruka) {
+    public String onMessage(String poruka) {
         for (Session session : sessions) {
             try {
-                session.getBasicRemote().sendText(JsonHelper.createJsonObjectString(poruka));
+                session.getBasicRemote().sendText(poruka);
             } catch (IOException ex) {
                 Logger.getLogger(Jms2WebSocket.class.getName()).log(Level.SEVERE, null, ex);
             }

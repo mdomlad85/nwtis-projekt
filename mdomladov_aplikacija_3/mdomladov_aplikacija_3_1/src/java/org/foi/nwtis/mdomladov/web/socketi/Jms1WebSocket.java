@@ -22,20 +22,16 @@ import org.foi.nwtis.mdomladov.podaci.Statistika;
  *
  * @author Marko Domladovac
  */
-@ServerEndpoint(
-        value = "/jms1",
-        decoders = {Jms1Coder.class},
-        encoders = {Jms1Coder.class}
-)
+@ServerEndpoint("/jms1")
 public class Jms1WebSocket {
 
-     private static List<Session> sessions = new ArrayList<>();
+     private static final List<Session> sessions = new ArrayList<>();
 
     @OnMessage
-    public Statistika onMessage(Statistika poruka) {
+    public String onMessage(String poruka) {
         for (Session session : sessions) {
             try {
-                session.getBasicRemote().sendText(JsonHelper.createJsonObjectString(poruka));
+                session.getBasicRemote().sendText(poruka);
             } catch (IOException ex) {
                 Logger.getLogger(Jms1WebSocket.class.getName()).log(Level.SEVERE, null, ex);
             }

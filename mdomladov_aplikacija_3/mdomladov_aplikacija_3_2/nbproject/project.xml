@@ -10,15 +10,15 @@
                     <file>${reference.mdomladov_aplikacija_3_1.dist}</file>
                 </library>
                 <library dirs="200">
+                    <file>${libs.primefaces.classpath}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
                     <file>${file.reference.Vjezba_06_1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.vjezba_03_2.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${libs.primefaces.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>

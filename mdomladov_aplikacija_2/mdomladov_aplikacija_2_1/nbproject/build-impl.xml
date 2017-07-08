@@ -793,57 +793,77 @@ exists or setup the property manually. For example like this:
     </target>
     <target depends="compile,-library-inclusion-in-archive-weblogic,-library-inclusion-in-archive-by-user" name="library-inclusion-in-archive"/>
     <target if="is.jars.in.ejbjar" name="-library-inclusion-in-archive-by-user">
+        <copyfiles files="${libs.jpa2-persistence.classpath}" todir="${build.classes.dir}"/>
+        <copyfiles files="${libs.jpa20-persistence.classpath}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.Vjezba_06_1.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.hawtbuf-1.9.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.hawtdispatch-1.9.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.hawtdispatch-transport-1.9.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.imqbroker.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.imqjmsbridge.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.imqjmsra.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.imqjmx.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.imqstomp.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.Vjezba_06_1.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.vjezba_03_2.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.javax.json.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.mqtt-client-1.0.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.okhttp-3.8.1.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.okio-1.13.0.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${libs.jpa2-persistence.classpath}" todir="${build.classes.dir}"/>
-        <copyfiles files="${libs.jpa20-persistence.classpath}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.vjezba_03_2.jar}" todir="${build.classes.dir}"/>
     </target>
     <target if="is.server.weblogic" name="-library-inclusion-in-archive-weblogic">
+        <basename file="${libs.jpa2-persistence.classpath}" property="manifest.libs.jpa2-persistence.classpath"/>
+        <basename file="${libs.jpa20-persistence.classpath}" property="manifest.libs.jpa20-persistence.classpath"/>
+        <basename file="${file.reference.Vjezba_06_1.jar}" property="manifest.file.reference.Vjezba_06_1.jar"/>
+        <basename file="${file.reference.hawtbuf-1.9.jar}" property="manifest.file.reference.hawtbuf-1.9.jar"/>
+        <basename file="${file.reference.hawtdispatch-1.9.jar}" property="manifest.file.reference.hawtdispatch-1.9.jar"/>
+        <basename file="${file.reference.hawtdispatch-transport-1.9.jar}" property="manifest.file.reference.hawtdispatch-transport-1.9.jar"/>
         <basename file="${file.reference.imqbroker.jar}" property="manifest.file.reference.imqbroker.jar"/>
         <basename file="${file.reference.imqjmsbridge.jar}" property="manifest.file.reference.imqjmsbridge.jar"/>
         <basename file="${file.reference.imqjmsra.jar}" property="manifest.file.reference.imqjmsra.jar"/>
         <basename file="${file.reference.imqjmx.jar}" property="manifest.file.reference.imqjmx.jar"/>
         <basename file="${file.reference.imqstomp.jar}" property="manifest.file.reference.imqstomp.jar"/>
-        <basename file="${file.reference.Vjezba_06_1.jar}" property="manifest.file.reference.Vjezba_06_1.jar"/>
-        <basename file="${file.reference.vjezba_03_2.jar}" property="manifest.file.reference.vjezba_03_2.jar"/>
+        <basename file="${file.reference.javax.json.jar}" property="manifest.file.reference.javax.json.jar"/>
+        <basename file="${file.reference.mqtt-client-1.0.jar}" property="manifest.file.reference.mqtt-client-1.0.jar"/>
         <basename file="${file.reference.okhttp-3.8.1.jar}" property="manifest.file.reference.okhttp-3.8.1.jar"/>
         <basename file="${file.reference.okio-1.13.0.jar}" property="manifest.file.reference.okio-1.13.0.jar"/>
-        <basename file="${libs.jpa2-persistence.classpath}" property="manifest.libs.jpa2-persistence.classpath"/>
-        <basename file="${libs.jpa20-persistence.classpath}" property="manifest.libs.jpa20-persistence.classpath"/>
+        <basename file="${file.reference.vjezba_03_2.jar}" property="manifest.file.reference.vjezba_03_2.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 jar-6 jar-7 jar-8 jar-9 jar-10 jar-11 "/>
-            <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.imqbroker.jar}"/>
-            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.imqjmsbridge.jar}"/>
-            <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.imqjmsra.jar}"/>
-            <attribute name="jar-4-Extension-Name" value="${manifest.file.reference.imqjmx.jar}"/>
-            <attribute name="jar-5-Extension-Name" value="${manifest.file.reference.imqstomp.jar}"/>
-            <attribute name="jar-6-Extension-Name" value="${manifest.file.reference.Vjezba_06_1.jar}"/>
-            <attribute name="jar-7-Extension-Name" value="${manifest.file.reference.vjezba_03_2.jar}"/>
-            <attribute name="jar-8-Extension-Name" value="${manifest.file.reference.okhttp-3.8.1.jar}"/>
-            <attribute name="jar-9-Extension-Name" value="${manifest.file.reference.okio-1.13.0.jar}"/>
-            <attribute name="jar-10-Extension-Name" value="${manifest.libs.jpa2-persistence.classpath}"/>
-            <attribute name="jar-11-Extension-Name" value="${manifest.libs.jpa20-persistence.classpath}"/>
+            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 jar-6 jar-7 jar-8 jar-9 jar-10 jar-11 jar-12 jar-13 jar-14 jar-15 jar-16 "/>
+            <attribute name="jar-1-Extension-Name" value="${manifest.libs.jpa2-persistence.classpath}"/>
+            <attribute name="jar-2-Extension-Name" value="${manifest.libs.jpa20-persistence.classpath}"/>
+            <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.Vjezba_06_1.jar}"/>
+            <attribute name="jar-4-Extension-Name" value="${manifest.file.reference.hawtbuf-1.9.jar}"/>
+            <attribute name="jar-5-Extension-Name" value="${manifest.file.reference.hawtdispatch-1.9.jar}"/>
+            <attribute name="jar-6-Extension-Name" value="${manifest.file.reference.hawtdispatch-transport-1.9.jar}"/>
+            <attribute name="jar-7-Extension-Name" value="${manifest.file.reference.imqbroker.jar}"/>
+            <attribute name="jar-8-Extension-Name" value="${manifest.file.reference.imqjmsbridge.jar}"/>
+            <attribute name="jar-9-Extension-Name" value="${manifest.file.reference.imqjmsra.jar}"/>
+            <attribute name="jar-10-Extension-Name" value="${manifest.file.reference.imqjmx.jar}"/>
+            <attribute name="jar-11-Extension-Name" value="${manifest.file.reference.imqstomp.jar}"/>
+            <attribute name="jar-12-Extension-Name" value="${manifest.file.reference.javax.json.jar}"/>
+            <attribute name="jar-13-Extension-Name" value="${manifest.file.reference.mqtt-client-1.0.jar}"/>
+            <attribute name="jar-14-Extension-Name" value="${manifest.file.reference.okhttp-3.8.1.jar}"/>
+            <attribute name="jar-15-Extension-Name" value="${manifest.file.reference.okio-1.13.0.jar}"/>
+            <attribute name="jar-16-Extension-Name" value="${manifest.file.reference.vjezba_03_2.jar}"/>
         </manifest>
     </target>
     <target depends="compile" name="library-inclusion-in-manifest">
+        <copyfiles files="${libs.jpa2-persistence.classpath}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${libs.jpa20-persistence.classpath}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.Vjezba_06_1.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.hawtbuf-1.9.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.hawtdispatch-1.9.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.hawtdispatch-transport-1.9.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.imqbroker.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.imqjmsbridge.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.imqjmsra.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.imqjmx.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.imqstomp.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.Vjezba_06_1.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.vjezba_03_2.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.javax.json.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.mqtt-client-1.0.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.okhttp-3.8.1.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.okio-1.13.0.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${libs.jpa2-persistence.classpath}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${libs.jpa20-persistence.classpath}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.vjezba_03_2.jar}" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
     <target name="-copy-meta-inf">
